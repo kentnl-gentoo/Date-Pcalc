@@ -1,0 +1,31 @@
+                     =====================================
+                       Package "Date::PCalc" Version 1.1
+                     =====================================
+
+			Copyright (c) 1999, 2000 J. David Eisenberg, with portions
+                     Copyright (c) 1995-2000 by Steffen Beyer.
+                             All rights reserved.
+
+
+Version history:
+----------------
+Version 1.1   06 Feb 2000
+
+ +  Added year windowing (yy < 70 ? 20yy : 19yy) to Decode_Date_EU2
+    and Decode_Date_US2
+ +  Added English_Ordinal for use in Date_to_Text_Long
+ +  Updated documentation to match Date::Calc version 4.3
+ +  Added various fixes to PCalc.pm from Steffen Beyer, mostly
+    involving optimizing use of returned lists
+
+Version 1.0   03 Aug 1999
+
+ +  First release of module. I wrote this module because I was doing
+ 	a project that required date calculations.  Date::Calc did
+	exactly what I wanted, but the client's ISP would not allow me to
+	compile C code.  I rewrote the few subroutines that I needed into
+	Perl, and then decided to translate the entire module to Perl in
+	case other people encountered the same problem.
+
+----------------------------------------------------------------------------
+

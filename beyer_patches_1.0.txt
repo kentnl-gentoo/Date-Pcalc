@@ -1,0 +1,275 @@
+*** Pcalc.pm.orig	Wed Aug  4 07:01:44 1999
+--- Pcalc.pm	Wed Jan 12 09:33:42 2000
+***************
+*** 473,480 ****
+  	my ($year, $month, $day) = @_;
+  	my $week;
+  
+! 	($week, $year) = core_Week_of_Year( $year, $month, $day );
+! 	if ($week)
+  	{
+  		return ($week, $year);
+  	}
+--- 473,479 ----
+  	my ($year, $month, $day) = @_;
+  	my $week;
+  
+! 	if (($week, $year) = core_Week_of_Year( $year, $month, $day ))
+  	{
+  		return ($week, $year);
+  	}
+***************
+*** 505,511 ****
+  	}
+  	else
+  	{
+! 		return ("", "");
+  	}
+  }
+  
+--- 504,510 ----
+  	}
+  	else
+  	{
+! 		return ();
+  	}
+  }
+  
+***************
+*** 599,606 ****
+  	my ($week, $dow, $yy);
+  
+  	$yy = $year;
+! 	($week, $year) = core_Week_of_Year($year, $month, $day);
+! 	if ($week)
+  	{
+  		$dow = Day_of_Week($yy, $month, $day);
+  		return ($year, $week, $dow);
+--- 598,604 ----
+  	my ($week, $dow, $yy);
+  
+  	$yy = $year;
+! 	if (($week, $year) = core_Week_of_Year($year, $month, $day))
+  	{
+  		$dow = Day_of_Week($yy, $month, $day);
+  		return ($year, $week, $dow);
+***************
+*** 617,633 ****
+  	my ($year, $week, $dow) = @_;
+  	my ($month, $day, $delta, $first, $result);
+  
+  	if (check_business_date($year, $week, $dow))
+  	{
+  		$month = $day = 1;
+  		$first = Day_of_Week($year, 1, 1);
+  		$delta = (($week + (($first > 4) ? 1 : 0) - 1) * 7) + ($dow - $first);
+! 		($year, $month, $day) = core_add_delta_days($year, $month, $day, $delta);
+! 		$result = (defined $year) ? 1 : 0;
+! 	}
+! 	else
+! 	{
+! 		$result = 0;
+  	}
+  	if ($result)
+  	{
+--- 615,628 ----
+  	my ($year, $week, $dow) = @_;
+  	my ($month, $day, $delta, $first, $result);
+  
++         $result = 0;
+  	if (check_business_date($year, $week, $dow))
+  	{
+  		$month = $day = 1;
+  		$first = Day_of_Week($year, 1, 1);
+  		$delta = (($week + (($first > 4) ? 1 : 0) - 1) * 7) + ($dow - $first);
+! 		if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $delta))
+! 		{ $result = 1; }
+  	}
+  	if ($result)
+  	{
+***************
+*** 782,788 ****
+      }
+      else
+  	{
+! 		return("","","");
+  	}
+  }
+  
+--- 777,783 ----
+      }
+      else
+  	{
+! 		return();
+  	}
+  }
+  
+***************
+*** 841,848 ****
+  			{
+  				$hour = $min = $sec = 0;
+  			}
+! 			($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd);
+! 			if ($year)
+  			{
+  				return ($year, $month, $day, $hour, $min, $sec);
+  			}
+--- 836,842 ----
+  			{
+  				$hour = $min = $sec = 0;
+  			}
+! 			if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd))
+  			{
+  				return ($year, $month, $day, $hour, $min, $sec);
+  			}
+***************
+*** 910,919 ****
+  {
+  	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  
+! 	($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock();
+! 
+! 	if ($year)
+  	{
+  		return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  	}
+--- 904,911 ----
+  {
+  	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  
+! 	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock())
+  	{
+  		return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  	}
+***************
+*** 945,960 ****
+  	}
+  	else
+  	{
+! 		return ("", "", "", "", "", "", "", "", "");
+  	}
+  }
+  
+  sub Today
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock;
+  
+! 	if ($year)
+  	{
+  		return ($year, $month, $day);
+  	}
+--- 937,952 ----
+  	}
+  	else
+  	{
+! 		return ();
+  	}
+  }
+  
+  sub Today
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  
+! 	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock())
+  	{
+  		return ($year, $month, $day);
+  	}
+***************
+*** 967,976 ****
+  
+  sub Now
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock;
+  
+! 	if ($year)
+  	{
+  		return ($hour, $min, $sec);
+  	}
+--- 959,968 ----
+  
+  sub Now
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  
+! 	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock())
+  	{
+  		return ($hour, $min, $sec);
+  	}
+***************
+*** 982,991 ****
+  
+  sub Today_and_Now
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock;
+  
+! 	if ($year)
+  	{
+  		return ($year, $month, $day, $hour, $min, $sec);
+  	}
+--- 974,983 ----
+  
+  sub Today_and_Now
+  {
+! 	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+  
+! 	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+! 		core_system_clock())
+  	{
+  		return ($year, $month, $day, $hour, $min, $sec);
+  	}
+***************
+*** 1114,1132 ****
+  sub Decode_Language
+  {
+  	my ($lang_str) = @_;
+! 	my ($lang, $len);
+  
+  	$len = length $lang_str;
+  
+  	$lang_str = uc $lang_str ;
+  	for ($lang=1; $lang<=$pcalc_Languages; $lang++)
+  	{
+  		if ($lang_str eq substr((uc $arr_Language_to_Text[$lang]), 0, $len))
+  		{
+! 			return $lang;
+  		}
+  	}
+! 	return 0;
+  }
+  
+  sub Compress
+--- 1106,1132 ----
+  sub Decode_Language
+  {
+  	my ($lang_str) = @_;
+! 	my ($lang, $len, $n_matched);
+  
+  	$len = length $lang_str;
++ 	$n_matched = 0;
+  
+  	$lang_str = uc $lang_str ;
+  	for ($lang=1; $lang<=$pcalc_Languages; $lang++)
+  	{
+  		if ($lang_str eq substr((uc $arr_Language_to_Text[$lang]), 0, $len))
+  		{
+! 			if ($n_matched > 0)
+! 			{
+! 				return 0;
+! 			}
+! 			else
+! 			{
+! 				$n_matched = $lang;
+! 			}
+  		}
+  	}
+! 	return $n_matched;
+  }
+  
+  sub Compress
