@@ -1,33 +1,38 @@
+
 ###############################################################################
-##    Copyright (c) 1999 by J. David Eisenberg                               ##
 ##                                                                           ##
-##    Documentation and some perl code                                       ##
-##    Copyright (c) 1995, 1996, 1997, 1998 by Steffen Beyer.                 ##
+##    Copyright (c) 1999-2001 by J. David Eisenberg                          ##
+##                                                                           ##
+##    Documentation and some of the Perl code                                ##
+##    Copyright (c) 1993-2001 by Steffen Beyer.                              ##
 ##    All rights reserved.                                                   ##
 ##                                                                           ##
 ##    This package is free software; you can redistribute it                 ##
 ##    and/or modify it under the same terms as Perl itself.                  ##
 ##                                                                           ##
 ###############################################################################
+
 package Date::Pcalc;
 
 use strict;
 
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS
-	$Year_of_Epoch
-	$Century_of_Epoch
-	$Epoch
-	$pcalc_Language
-	$pcalc_Languages
-	@arr_Days_in_Year
-	@arr_Days_in_Month
-	@arr_Month_to_Text
-	@arr_Day_of_Week_to_Text
-	@arr_Day_of_Week_Abbreviation
-	@arr_Language_to_Text
-	@english_ordinal_suffix
-	@date_long_format
-	);
+use vars
+qw(
+    $VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS
+    $Year_of_Epoch
+    $Century_of_Epoch
+    $Epoch
+    $pcalc_Language
+    $pcalc_Languages
+    @arr_Days_in_Year
+    @arr_Days_in_Month
+    @arr_Month_to_Text
+    @arr_Day_of_Week_to_Text
+    @arr_Day_of_Week_Abbreviation
+    @arr_Language_to_Text
+    @english_ordinal_suffix
+    @date_long_format
+);
 
 require Exporter;
 
@@ -38,7 +43,8 @@ require Exporter;
 # Do not simply export all your public functions/methods/constants.
 
 @EXPORT = qw();
-@EXPORT_OK = qw(
+@EXPORT_OK =
+qw(
     Days_in_Year
     Days_in_Month
     Weeks_in_Year
@@ -73,7 +79,7 @@ require Exporter;
     Compressed_to_Text
     Date_to_Text
     Date_to_Text_Long
-	English_Ordinal
+    English_Ordinal
     Calendar
     Month_to_Text
     Day_of_Week_to_Text
@@ -98,7 +104,7 @@ require Exporter;
 ##                                              ##
 ##################################################
 
-$VERSION = '1.1';
+$VERSION = '1.2';
 
 use Carp;
 
@@ -109,11 +115,11 @@ $pcalc_Language = 1;
 $pcalc_Languages = 7;
 
 #
-#	Array names have been changed from the form
+#    Array names have been changed from the form
 #
-#	   some_name_ --> arr_some_name
+#       some_name_ --> arr_some_name
 #
-#	to make them easier to distinguish
+#    to make them easier to distinguish
 #
 
 @arr_Days_in_Year = (
@@ -156,14 +162,14 @@ $pcalc_Languages = 7;
         "???", "Januari", "Februari", "Maart", "April", "Mei", "Juni",
         "Juli", "Augustus", "September", "October", "November", "December"
     ],
-	[
+    [
         "???", "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
         "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
-	]
+    ]
 );
 
 
-@arr_Day_of_Week_to_Text = 
+@arr_Day_of_Week_to_Text =
 (
     [
         "???", "???", "???", "???",
@@ -193,13 +199,13 @@ $pcalc_Languages = 7;
         "???", "Maandag", "Dinsdag", "Woensdag",
         "Donderdag", "Vrijdag", "Zaterdag", "Zondag"
     ],
-	[
+    [
         "???", "Lunedì", "Martedì", "Mercoledì",
         "Giovedì", "Venerdì", "Sabato", "Domenica"
-	]
+    ]
 );
 
-@arr_Day_of_Week_Abbreviation = 
+@arr_Day_of_Week_Abbreviation =
 
     # Fill the fields below _only_ if special abbreviations are needed!
     # Note that the first field serves as a flag and must be non-empty!
@@ -214,7 +220,7 @@ $pcalc_Languages = 7;
         "", "", "", "", "", "", "", ""    # 2
     ],
     [
-        "", "", "", "", "", "", "", ""    # 3 
+        "", "", "", "", "", "", "", ""    # 3
     ],
     [
         "", "", "", "", "", "", "", ""    # 4
@@ -243,7 +249,7 @@ $pcalc_Languages = 7;
     "%s, %d %s %d"                      # 7  Italiano
 );
 
-@arr_Language_to_Text = 
+@arr_Language_to_Text =
 (
     "???", "English", "Français", "Deutsch", "Español",
     "Português", "Nederlands", "Italiano"
@@ -251,78 +257,77 @@ $pcalc_Languages = 7;
 
 sub DATECALC_ERROR
 {
-	my ($name, $err) = @_;
-	croak(__PACKAGE__ ."::${name}(): $err");
+    my ($name, $err) = @_;
+    croak(__PACKAGE__ ."::${name}(): $err");
 }
 
 sub DATECALC_DATE_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): not a valid date");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): not a valid date");
 }
 
 sub DATECALC_TIME_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): not a valid time");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): not a valid time");
 }
 
 sub DATECALC_YEAR_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): year out of range");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): year out of range");
 }
 
 sub DATECALC_MONTH_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): month out of range");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): month out of range");
 }
 
 sub DATECALC_WEEK_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): week out of range");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): week out of range");
 }
 
 sub DATECALC_DAYOFWEEK_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): day of week out of range");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): day of week out of range");
 }
 
 sub DATECALC_FACTOR_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): factor out of range");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): factor out of range");
 }
 
 sub DATECALC_LANGUAGE_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): language not available");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): language not available");
 }
 
 sub DATECALC_SYSTEM_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): not available on this system");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): not available on this system");
 }
 
 sub DATECALC_MEMORY_ERROR
 {
-	my ($name) = @_;
-	croak("Date::Pcalc::${name}(): unable to allocate memory");
+    my ($name) = @_;
+    croak("Date::Pcalc::${name}(): unable to allocate memory");
 }
-
 
 sub Year_to_Days
 {
-	my ($year) = @_;
-	my $days = 365 * $year;
+    my ($year) = @_;
+    my $days = 365 * $year;
 
     $days += ($year >>= 2);
-	$year = int ($year / 25);
+    $year = int ($year / 25);
     $days -= $year;
     $days += ($year >>  2);
     return $days;
@@ -330,450 +335,452 @@ sub Year_to_Days
 
 sub leap_year
 {
-	my ($year) = @_;
-	my $yy = int ($year/100);
-	if ($year > 0)
-	{
-		return ((($year & 0x03) ==0) &&
-			(( $yy * 100 != $year) ||
-		  	(($yy & 0x03) == 0) ) ) ? 1 : 0;
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("leap_year");
-	}
+    my ($year) = @_;
+    my $yy = int ($year/100);
+    if ($year > 0)
+    {
+        return ((($year & 0x03) ==0) &&
+            (( $yy * 100 != $year) ||
+              (($yy & 0x03) == 0) ) ) ? 1 : 0;
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("leap_year");
+    }
 }
 
 sub Days_in_Year
 {
-	my ($year, $month) = @_;
-	if ($year > 0)
-	{
-		if (($month >= 1) && ($month <= 12))
-		{
-			return $arr_Days_in_Year[leap_year($year)][$month+1];
-		}
-		else
-		{
-			DATECALC_MONTH_ERROR("Days_in_Year");
-		}
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Days_in_Year");
-	}
+    my ($year, $month) = @_;
+    if ($year > 0)
+    {
+        if (($month >= 1) && ($month <= 12))
+        {
+            return $arr_Days_in_Year[leap_year($year)][$month+1];
+        }
+        else
+        {
+            DATECALC_MONTH_ERROR("Days_in_Year");
+        }
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Days_in_Year");
+    }
 }
 
 sub Days_in_Month
 {
-	my ($year, $month) = @_;
-	if ($year > 0)
-	{
-		if (($month >= 1) && ($month <= 12))
-		{
-			return $arr_Days_in_Month[leap_year($year)][$month];
-		}
-		else
-		{
-			DATECALC_MONTH_ERROR("Days_in_Month");
-		}
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Days_in_Month");
-	}
+    my ($year, $month) = @_;
+    if ($year > 0)
+    {
+        if (($month >= 1) && ($month <= 12))
+        {
+            return $arr_Days_in_Month[leap_year($year)][$month];
+        }
+        else
+        {
+            DATECALC_MONTH_ERROR("Days_in_Month");
+        }
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Days_in_Month");
+    }
 }
 
 sub Weeks_in_Year
 {
-	my ($year) = @_;
-	if ($year > 0)
-	{
-		return 52 + (((Day_of_Week($year, 1, 1) == 4) ||
-			(Day_of_Week($year, 12, 31) == 4) ) ? 1 : 0);
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Weeks_in_Year");
-	}
+    my ($year) = @_;
+    if ($year > 0)
+    {
+        return 52 + (((Day_of_Week($year, 1, 1) == 4) ||
+            (Day_of_Week($year, 12, 31) == 4) ) ? 1 : 0);
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Weeks_in_Year");
+    }
 }
 
 sub check_date
 {
-	my ($year, $month, $day) = @_;
-	return (($year >= 1) &&
-	    ($month >= 1) && ($month <= 12) &&
-		($day >= 1) &&
-		($day <= $arr_Days_in_Month[leap_year($year)][$month])) ? 1 : 0;
+    my ($year, $month, $day) = @_;
+    return (($year >= 1) &&
+        ($month >= 1) && ($month <= 12) &&
+        ($day >= 1) &&
+        ($day <= $arr_Days_in_Month[leap_year($year)][$month])) ? 1 : 0;
 }
+
 #
-#	This new function returns
+#    This new function returns
 #
-#	-1	invalid date
+#    -1    invalid date
 #    0  non-leap year
-#	 1	valid leap year
+#     1    valid leap year
 #
+
 sub check_date_leap
 {
-	my ($year, $month, $day) = @_;
-	my $leap = leap_year($year);
-	return (($year >= 1) &&
-	    ($month >= 1) && ($month <= 12) &&
-		($day >= 1) &&
-		($day <= $arr_Days_in_Month[$leap][$month])) ? $leap : -1;
+    my ($year, $month, $day) = @_;
+    my $leap = leap_year($year);
+    return (($year >= 1) &&
+        ($month >= 1) && ($month <= 12) &&
+        ($day >= 1) &&
+        ($day <= $arr_Days_in_Month[$leap][$month])) ? $leap : -1;
 }
 
 sub check_business_date
 {
-	my ($year, $week, $dow) = @_;
+    my ($year, $week, $dow) = @_;
 
-	return (($year >= 1) &&
-	    ($week >= 1) && ($week <= Weeks_in_Year($year)) &&
-		($dow >= 1) && ($dow <= 7)) ? 1 : 0;
+    return (($year >= 1) &&
+        ($week >= 1) && ($week <= Weeks_in_Year($year)) &&
+        ($dow >= 1) && ($dow <= 7)) ? 1 : 0;
 }
 
 sub Day_of_Year
 {
-	my ($year, $month, $day) = @_;
-	my ($leap) = check_date_leap($year, $month, $day);
-	if ( $leap >= 0)
-	{
-		return $arr_Days_in_Year[$leap][$month] + $day;
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Day_of_Year");
-	}
+    my ($year, $month, $day) = @_;
+    my ($leap) = check_date_leap($year, $month, $day);
+    if ( $leap >= 0)
+    {
+        return $arr_Days_in_Year[$leap][$month] + $day;
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Day_of_Year");
+    }
 }
 
 sub Date_to_Days
 {
-	my ($year, $month, $day) = @_;
-	my $leap = check_date_leap( $year, $month, $day );
+    my ($year, $month, $day) = @_;
+    my $leap = check_date_leap( $year, $month, $day );
 
-	if ($leap >= 0)
-	{
-		return (Year_to_Days(--$year) +
-			$arr_Days_in_Year[$leap][$month] + $day );
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Date_to_Days");
-	}
+    if ($leap >= 0)
+    {
+        return (Year_to_Days(--$year) +
+            $arr_Days_in_Year[$leap][$month] + $day );
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Date_to_Days");
+    }
 }
 
 sub Day_of_Week
 {
-	my ($year, $month, $day) = @_;
-	my $n_days = Date_to_Days($year, $month, $day);
-	if ($n_days > 0)
-	{
-		$n_days--;
-		$n_days %= 7;
-		$n_days++;
-		return $n_days;
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Date_of_Week");
-	}
+    my ($year, $month, $day) = @_;
+    my $n_days = Date_to_Days($year, $month, $day);
+    if ($n_days > 0)
+    {
+        $n_days--;
+        $n_days %= 7;
+        $n_days++;
+        return $n_days;
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Date_of_Week");
+    }
 }
 
 sub Week_Number
 {
-	my ($year, $month, $day) = @_;
-	my $first;
-	if (check_date($year, $month, $day))
-	{
-		$first = Day_of_Week($year, 1, 1) - 1;
-		return int (( core_delta_days($year, 1, 1, $year, $month, $day) + 
-		   $first) / 7) + (($first < 4) ? 1 : 0);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Week_Number");
-	}
+    my ($year, $month, $day) = @_;
+    my $first;
+    if (check_date($year, $month, $day))
+    {
+        $first = Day_of_Week($year, 1, 1) - 1;
+        return int (( core_delta_days($year, 1, 1, $year, $month, $day) +
+           $first) / 7) + (($first < 4) ? 1 : 0);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Week_Number");
+    }
 }
 
 sub Week_of_Year
 {
-	my ($year, $month, $day) = @_;
-	my $week;
+    my ($year, $month, $day) = @_;
+    my $week;
 
-	if (($week, $year) = core_Week_of_Year( $year, $month, $day ))
-	{
-		return ($week, $year);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Week_of_Year");
-	}
+    if (($week, $year) = core_Week_of_Year( $year, $month, $day ))
+    {
+        return ($week, $year);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Week_of_Year");
+    }
 }
 
 sub core_Week_of_Year
 {
-	my ($year, $month, $day) = @_;
-	my $week;
+    my ($year, $month, $day) = @_;
+    my $week;
 
-	if (check_date($year, $month, $day))
-	{
-		$week = Week_Number($year, $month, $day);
-		if ($week == 0)
-		{
-			$week = Weeks_in_Year(--$year);
-		}
-		elsif ($week > Weeks_in_Year($year))
-		{
-			$week = 1;
-			$year++;
-		}
-		return ($week, $year);
-	}
-	else
-	{
-		return ();
-	}
+    if (check_date($year, $month, $day))
+    {
+        $week = Week_Number($year, $month, $day);
+        if ($week == 0)
+        {
+            $week = Weeks_in_Year(--$year);
+        }
+        elsif ($week > Weeks_in_Year($year))
+        {
+            $week = 1;
+            $year++;
+        }
+        return ($week, $year);
+    }
+    else
+    {
+        return ();
+    }
 }
 
 sub Monday_of_Week
 {
-	my ($week, $year) = @_;
-	my ($first, $month, $day);
+    my ($week, $year) = @_;
+    my ($first, $month, $day);
 
 
-	if ($year > 0)
-	{
-		if (($week > 0) && ($week <= Weeks_in_Year($year)))
-		{
-			$month = $day = 1;
-			$first = Day_of_Week($year, 1, 1) - 1;
-			if ($first < 4)
-			{
-				$week--;
-			}
-			($year, $month, $day) = core_add_delta_days($year, $month,
-				$day, ($week * 7 - $first) );
-			return ($year, $month, $day);
-		}
-		else
-		{
-			DATECALC_WEEK_ERROR("Monday_of_Week");
-		}
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Monday_of_Week");
-	}
+    if ($year > 0)
+    {
+        if (($week > 0) && ($week <= Weeks_in_Year($year)))
+        {
+            $month = $day = 1;
+            $first = Day_of_Week($year, 1, 1) - 1;
+            if ($first < 4)
+            {
+                $week--;
+            }
+            ($year, $month, $day) = core_add_delta_days($year, $month,
+                $day, ($week * 7 - $first) );
+            return ($year, $month, $day);
+        }
+        else
+        {
+            DATECALC_WEEK_ERROR("Monday_of_Week");
+        }
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Monday_of_Week");
+    }
 }
 
 sub Nth_Weekday_of_Month_Year
 {
-	my ($year, $month, $dow, $n) = @_;
-	my ($day, $first, $delta, $mm);
-	$mm = $month;
+    my ($year, $month, $dow, $n) = @_;
+    my ($day, $first, $delta, $mm);
+    $mm = $month;
 
-	if ($year > 0)
-	{
-		if (($month >= 1) && ($month <= 12))
-		{
-			if (($dow >= 1) && ($dow <= 7))
-			{
-				if (($n >= 1) && ($n <= 5))
-				{
-					$day = 1;
-					$first = Day_of_Week($year, $mm, 1);
-					if ($dow < $first)
-					{
-						$dow += 7;
-					}
-					$delta = $dow - $first;
-					$delta += ($n-1) * 7;
-					($year, $month, $day) =
-						core_add_delta_days($year, $month, $day, $delta);
-					if ($year && ($month == $mm))
-					{
-						return ($year, $month, $day);
-					}
-					else
-					{
-						return ();
-					}
-				}
-				else
-				{
-					DATECALC_FACTOR_ERROR("Nth_Weekday_of_Month_Year");
-				}
-			}
-			else
-			{
-				DATECALC_DAYOFWEEK_ERROR("Nth_Weekday_of_Month_Year");
-			}
-		}
-		else
-		{
-			DATECALC_MONTH_ERROR("Nth_Weekday_of_Month_Year");
-		}
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Nth_Weekday_of_Month_Year");
-	}
+    if ($year > 0)
+    {
+        if (($month >= 1) && ($month <= 12))
+        {
+            if (($dow >= 1) && ($dow <= 7))
+            {
+                if (($n >= 1) && ($n <= 5))
+                {
+                    $day = 1;
+                    $first = Day_of_Week($year, $mm, 1);
+                    if ($dow < $first)
+                    {
+                        $dow += 7;
+                    }
+                    $delta = $dow - $first;
+                    $delta += ($n-1) * 7;
+                    ($year, $month, $day) =
+                        core_add_delta_days($year, $month, $day, $delta);
+                    if ($year && ($month == $mm))
+                    {
+                        return ($year, $month, $day);
+                    }
+                    else
+                    {
+                        return ();
+                    }
+                }
+                else
+                {
+                    DATECALC_FACTOR_ERROR("Nth_Weekday_of_Month_Year");
+                }
+            }
+            else
+            {
+                DATECALC_DAYOFWEEK_ERROR("Nth_Weekday_of_Month_Year");
+            }
+        }
+        else
+        {
+            DATECALC_MONTH_ERROR("Nth_Weekday_of_Month_Year");
+        }
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Nth_Weekday_of_Month_Year");
+    }
 }
+
 sub Standard_to_Business
 {
-	my ($year, $month, $day) = @_;
-	my ($week, $dow, $yy);
+    my ($year, $month, $day) = @_;
+    my ($week, $dow, $yy);
 
-	$yy = $year;
-	if (($week, $year) = core_Week_of_Year($year, $month, $day))
-	{
-		$dow = Day_of_Week($yy, $month, $day);
-		return ($year, $week, $dow);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Standard_to_Business");
-	}
+    $yy = $year;
+    if (($week, $year) = core_Week_of_Year($year, $month, $day))
+    {
+        $dow = Day_of_Week($yy, $month, $day);
+        return ($year, $week, $dow);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Standard_to_Business");
+    }
 }
 
-	
 sub Business_to_Standard
 {
-	my ($year, $week, $dow) = @_;
-	my ($month, $day, $delta, $first, $result);
+    my ($year, $week, $dow) = @_;
+    my ($month, $day, $delta, $first, $result);
 
         $result = 0;
-	if (check_business_date($year, $week, $dow))
-	{
-		$month = $day = 1;
-		$first = Day_of_Week($year, 1, 1);
-		$delta = (($week + (($first > 4) ? 1 : 0) - 1) * 7) + ($dow - $first);
-		if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $delta))
-		{ $result = 1; }
-	}
-	if ($result)
-	{
-		return ($year, $month, $day);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Business_to_Standard");
-	}
+    if (check_business_date($year, $week, $dow))
+    {
+        $month = $day = 1;
+        $first = Day_of_Week($year, 1, 1);
+        $delta = (($week + (($first > 4) ? 1 : 0) - 1) * 7) + ($dow - $first);
+        if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $delta))
+        { $result = 1; }
+    }
+    if ($result)
+    {
+        return ($year, $month, $day);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Business_to_Standard");
+    }
 }
 
 sub Delta_Days
 {
-	my ($year1, $month1, $day1, $year2, $month2, $day2) = @_;
-	if (check_date($year1, $month1, $day1) &&
-		check_date($year2, $month2, $day2))
-	{
-		return core_delta_days($year1, $month1, $day1, $year2, $month2, $day2);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Delta_Days");
-	}
+    my ($year1, $month1, $day1, $year2, $month2, $day2) = @_;
+    if (check_date($year1, $month1, $day1) &&
+        check_date($year2, $month2, $day2))
+    {
+        return core_delta_days($year1, $month1, $day1, $year2, $month2, $day2);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Delta_Days");
+    }
 }
 
 sub core_delta_days
 {
-	my ($year1, $month1, $day1, $year2, $month2, $day2) = @_;
-	return Date_to_Days($year2, $month2, $day2) -
-		Date_to_Days($year1, $month1, $day1);
+    my ($year1, $month1, $day1, $year2, $month2, $day2) = @_;
+    return Date_to_Days($year2, $month2, $day2) -
+        Date_to_Days($year1, $month1, $day1);
 }
 
 sub Delta_DHMS
 {
-	my ($year1, $month1, $day1, $hour1, $min1, $sec1,
-		$year2, $month2, $day2, $hour2, $min2, $sec2) = @_;
-	my ($Dd, $Dh, $Dm, $Ds, $delta, $quot, $sign);
+    my ($year1, $month1, $day1, $hour1, $min1, $sec1,
+        $year2, $month2, $day2, $hour2, $min2, $sec2) = @_;
+    my ($Dd, $Dh, $Dm, $Ds, $delta, $quot, $sign);
 
-	if (check_date($year1, $month1, $day1) &&
-		check_date($year2, $month2, $day2))
-	{
+    if (check_date($year1, $month1, $day1) &&
+        check_date($year2, $month2, $day2))
+    {
         if (($hour1 >= 0) && ($min1 >= 0) && ($sec1 >= 0) &&
             ($hour2 >= 0) && ($min2 >= 0) && ($sec2 >= 0) &&
             ($hour1 < 24) && ($min1 < 60) && ($sec1 < 60) &&
             ($hour2 < 24) && ($min2 < 60) && ($sec2 < 60))
-		{
-			$Dd = $Dh = $Dm = $Ds = 0;
-			$delta = (((($hour2 * 60) + $min2) * 60) + $sec2) -
-					(((($hour1 * 60) + $min1) * 60) + $sec1);
-			$Dd = core_delta_days($year1, $month1, $day1, $year2, $month2, $day2);
-			if ($Dd != 0)
-			{
-				if ($Dd > 0)
-				{
-					if ($delta < 0)
-					{
-						$delta += 86400;
-						$Dd--;
-					}
-				}
-				else
-				{
-					if ($delta > 0)
-					{
-						$delta -= 86400;
-						$Dd++;
-					}
-				}
-			}
-			if ($delta != 0)
-			{
-				$sign = 0;
-				if ($delta < 0)
-				{
-					$sign = 1;
-					$delta = -$delta;
-				}
-				$quot  = int ($delta / 60);
-				$Ds   = $delta - $quot * 60;
-				$delta = $quot;
-				$quot  = int ($delta / 60);
-				$Dm   = $delta - $quot * 60;
-				$Dh   = $quot;
-				if ($sign)
-				{
-					$Ds = -($Ds);
-					$Dm = -($Dm);
-					$Dh = -($Dh);
-				}
-			}
-			return ($Dd, $Dh, $Dm, $Ds);
-		}
-		else
-		{
-			DATECALC_TIME_ERROR("Delta_DHMS");
-		}
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Delta_DHMS");
-	}
+        {
+            $Dd = $Dh = $Dm = $Ds = 0;
+            $delta = (((($hour2 * 60) + $min2) * 60) + $sec2) -
+                    (((($hour1 * 60) + $min1) * 60) + $sec1);
+            $Dd = core_delta_days($year1, $month1, $day1, $year2, $month2, $day2);
+            if ($Dd != 0)
+            {
+                if ($Dd > 0)
+                {
+                    if ($delta < 0)
+                    {
+                        $delta += 86400;
+                        $Dd--;
+                    }
+                }
+                else
+                {
+                    if ($delta > 0)
+                    {
+                        $delta -= 86400;
+                        $Dd++;
+                    }
+                }
+            }
+            if ($delta != 0)
+            {
+                $sign = 0;
+                if ($delta < 0)
+                {
+                    $sign = 1;
+                    $delta = -$delta;
+                }
+                $quot  = int ($delta / 60);
+                $Ds   = $delta - $quot * 60;
+                $delta = $quot;
+                $quot  = int ($delta / 60);
+                $Dm   = $delta - $quot * 60;
+                $Dh   = $quot;
+                if ($sign)
+                {
+                    $Ds = -($Ds);
+                    $Dm = -($Dm);
+                    $Dh = -($Dh);
+                }
+            }
+            return ($Dd, $Dh, $Dm, $Ds);
+        }
+        else
+        {
+            DATECALC_TIME_ERROR("Delta_DHMS");
+        }
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Delta_DHMS");
+    }
 }
 
 sub Add_Delta_Days
 {
-	my ($year, $month, $day, $Dd) = @_;
-	($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd);
-	if ($year)
-	{
-		return ($year, $month, $day);
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Add_Delta_Days");
-	}
+    my ($year, $month, $day, $Dd) = @_;
+    ($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd);
+    if ($year)
+    {
+        return ($year, $month, $day);
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Add_Delta_Days");
+    }
 }
 
 sub core_add_delta_days
 {
-	my ($year, $month, $day, $Dd) = @_;
-	my ($n_days, $leap);
+    my ($year, $month, $day, $Dd) = @_;
+    my ($n_days, $leap);
 
     if ((check_date($year, $month, $day)) &&
-		(($n_days = Date_to_Days($year, $month, $day)) > 0) &&
+        (($n_days = Date_to_Days($year, $month, $day)) > 0) &&
         (($n_days += $Dd) > 0))
     {
         $year = int ( $n_days / 365.2425 );
@@ -783,10 +790,10 @@ sub core_add_delta_days
             $day = $n_days - Year_to_Days($year-1);
         }
         else
-		{
-			$year++;
+        {
+            $year++;
         }
-		$leap = leap_year($year);
+        $leap = leap_year($year);
         if ($day > $arr_Days_in_Year[$leap][13])
         {
             $day -= $arr_Days_in_Year[$leap][13];
@@ -803,101 +810,101 @@ sub core_add_delta_days
         return($year, $month, $day);
     }
     else
-	{
-		return();
-	}
+    {
+        return();
+    }
 }
 
 sub Add_Delta_DHMS
 {
-	my ($year, $month, $day, $hour, $min, $sec, $Dd, $Dh, $Dm, $Ds) = @_;
-	my ($sum, $quot);
+    my ($year, $month, $day, $hour, $min, $sec, $Dd, $Dh, $Dm, $Ds) = @_;
+    my ($sum, $quot);
 
-	if (check_date($year, $month, $day))
-	{
+    if (check_date($year, $month, $day))
+    {
         if (($hour >= 0) && ($min >= 0) && ($sec >= 0) &&
             ($hour < 24) && ($min < 60) && ($sec < 60))
         {
-			$quot = int ($Dh / 24);
-			$Dh  -= $quot * 24;
-			$Dd  += $quot;
-			$quot = int ($Dm / 60);
-			$Dm  -= $quot * 60;
-			$Dh  += $quot;
-			$quot = int ($Ds / 60);
-			$Ds  -= $quot * 60;
-			$Dm  += $quot;
-			$quot = int ($Dm / 60);
-			$Dm  -= $quot * 60;
-			$Dh  += $quot;
-			$quot = int ($Dh / 24);
-			$Dh  -= $quot * 24;
-			$Dd  += $quot;
+            $quot = int ($Dh / 24);
+            $Dh  -= $quot * 24;
+            $Dd  += $quot;
+            $quot = int ($Dm / 60);
+            $Dm  -= $quot * 60;
+            $Dh  += $quot;
+            $quot = int ($Ds / 60);
+            $Ds  -= $quot * 60;
+            $Dm  += $quot;
+            $quot = int ($Dm / 60);
+            $Dm  -= $quot * 60;
+            $Dh  += $quot;
+            $quot = int ($Dh / 24);
+            $Dh  -= $quot * 24;
+            $Dd  += $quot;
 
-			$sum = (((($hour * 60) + $min) * 60) + $sec) +
-				  (((( $Dh   * 60) +  $Dm)  * 60) +  $Ds);
-			if ($sum < 0)
-			{
-				$quot = int ($sum / 86400);
-				$sum -= $quot * 86400;
-				$Dd += $quot;
-				if ($sum < 0)
-				{
-					$sum += 86400;
-					$Dd--;
-				}
-			}
-			if ($sum > 0)
-			{
-				$quot  = int ($sum / 60);
-				$sec  = $sum - $quot * 60;
-				$sum  = $quot;
-				$quot = int ($sum / 60);
-				$min  = $sum - $quot * 60;
-				$sum  = $quot;
-				$quot = int ($sum / 24);
-				$hour = $sum - $quot * 24;
-				$Dd   += $quot;
-			}
-			else
-			{
-				$hour = $min = $sec = 0;
-			}
-			if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd))
-			{
-				return ($year, $month, $day, $hour, $min, $sec);
-			}
-			else
-			{
-				DATECALC_DATE_ERROR("Add_Delta_DHMS");
-			}
-		}
-		else
-		{
-			DATECALC_TIME_ERROR("Add_Delta_DHMS");
-		}
-	}
-	else
-	{
-		DATECALC_DATE_ERROR("Add_Delta_DHMS");
-	}
+            $sum = (((($hour * 60) + $min) * 60) + $sec) +
+                  (((( $Dh   * 60) +  $Dm)  * 60) +  $Ds);
+            if ($sum < 0)
+            {
+                $quot = int ($sum / 86400);
+                $sum -= $quot * 86400;
+                $Dd += $quot;
+                if ($sum < 0)
+                {
+                    $sum += 86400;
+                    $Dd--;
+                }
+            }
+            if ($sum > 0)
+            {
+                $quot  = int ($sum / 60);
+                $sec  = $sum - $quot * 60;
+                $sum  = $quot;
+                $quot = int ($sum / 60);
+                $min  = $sum - $quot * 60;
+                $sum  = $quot;
+                $quot = int ($sum / 24);
+                $hour = $sum - $quot * 24;
+                $Dd   += $quot;
+            }
+            else
+            {
+                $hour = $min = $sec = 0;
+            }
+            if (($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd))
+            {
+                return ($year, $month, $day, $hour, $min, $sec);
+            }
+            else
+            {
+                DATECALC_DATE_ERROR("Add_Delta_DHMS");
+            }
+        }
+        else
+        {
+            DATECALC_TIME_ERROR("Add_Delta_DHMS");
+        }
+    }
+    else
+    {
+        DATECALC_DATE_ERROR("Add_Delta_DHMS");
+    }
 }
 
 sub Add_Delta_YMD
 {
-	my ($year, $month, $day, $Dy, $Dm, $Dd) = @_;
-	my $delta = 0;
+    my ($year, $month, $day, $Dy, $Dm, $Dd) = @_;
+    my $delta = 0;
 
-	if (!check_date($year, $month, $day))
-	{
-		DATECALC_DATE_ERROR("Add_Delta_YMD");
-	}
-	($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd);
+    if (!check_date($year, $month, $day))
+    {
+        DATECALC_DATE_ERROR("Add_Delta_YMD");
+    }
+    ($year, $month, $day) = core_add_delta_days($year, $month, $day, $Dd);
 
-	if (($Dd != 0) && (!$year))
-	{
-		DATECALC_DATE_ERROR("Add_Delta_YMD");
-	}
+    if (($Dd != 0) && (!$year))
+    {
+        DATECALC_DATE_ERROR("Add_Delta_YMD");
+    }
     if ($Dm != 0)
     {
         $Dm += ($month - 1);
@@ -922,102 +929,102 @@ sub Add_Delta_YMD
         return ($year, $month, $day);
     }
     else
-	{
-		DATECALC_DATE_ERROR("Add_Delta_YMD");
-	}
+    {
+        DATECALC_DATE_ERROR("Add_Delta_YMD");
+    }
 }
 
 sub System_Clock
 {
-	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
 
-	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
-		core_system_clock())
-	{
-		return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
-	}
-	else
-	{
-		DATECALC_SYSTEM_ERROR("System_Clock");
-	}
+    if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+        core_system_clock())
+    {
+        return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    }
+    else
+    {
+        DATECALC_SYSTEM_ERROR("System_Clock");
+    }
 }
 
 sub core_system_clock
 {
-	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
 
-	my ($elapsed_seconds);
+    my ($elapsed_seconds);
 
-	$elapsed_seconds = time();
-	if ($elapsed_seconds > 0)
-	{
-		($sec, $min, $hour, $day, $month, $year, $dow, $doy, $dst) =
-		 	localtime($elapsed_seconds);
-		$year += 1900;
-		$month++;
-		$doy++;
-		if ($dow == 0)
-		{
-			$dow = 7;
-		}
-		return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
-	}
-	else
-	{
-		return ();
-	}
+    $elapsed_seconds = time();
+    if ($elapsed_seconds > 0)
+    {
+        ($sec, $min, $hour, $day, $month, $year, $dow, $doy, $dst) =
+             localtime($elapsed_seconds);
+        $year += 1900;
+        $month++;
+        $doy++;
+        if ($dow == 0)
+        {
+            $dow = 7;
+        }
+        return ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    }
+    else
+    {
+        return ();
+    }
 }
 
 sub Today
 {
-	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
 
-	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
-		core_system_clock())
-	{
-		return ($year, $month, $day);
-	}
-	else
-	{
-		DATECALC_SYSTEM_ERROR("Today");
-	}
+    if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+        core_system_clock())
+    {
+        return ($year, $month, $day);
+    }
+    else
+    {
+        DATECALC_SYSTEM_ERROR("Today");
+    }
 
 }
 
 sub Now
 {
-	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
 
-	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
-		core_system_clock())
-	{
-		return ($hour, $min, $sec);
-	}
-	else
-	{
-		DATECALC_SYSTEM_ERROR("Today");
-	}
+    if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+        core_system_clock())
+    {
+        return ($hour, $min, $sec);
+    }
+    else
+    {
+        DATECALC_SYSTEM_ERROR("Today");
+    }
 }
 
 sub Today_and_Now
 {
-	my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
+    my ($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst);
 
-	if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
-		core_system_clock())
-	{
-		return ($year, $month, $day, $hour, $min, $sec);
-	}
-	else
-	{
-		DATECALC_SYSTEM_ERROR("Today_and_Now");
-	}
+    if (($year, $month, $day, $hour, $min, $sec, $doy, $dow, $dst) =
+        core_system_clock())
+    {
+        return ($year, $month, $day, $hour, $min, $sec);
+    }
+    else
+    {
+        DATECALC_SYSTEM_ERROR("Today_and_Now");
+    }
 }
 
 sub Easter_Sunday
 {
-	my ($year) = @_;
-	my ($month, $day);
+    my ($year) = @_;
+    my ($month, $day);
     ################################################################
     #                                                              #
     #  Gauss'sche Regel (Gaussian Rule)                            #
@@ -1033,9 +1040,9 @@ sub Easter_Sunday
     my ($a, $b, $c, $d, $e, $m, $n);
 
     if (($year <= 0) || ($year < 1583) || ($year > 2299))
-	{
-		DATECALC_YEAR_ERROR("Easter_Sunday");
-	}
+    {
+        DATECALC_YEAR_ERROR("Easter_Sunday");
+    }
 
     if    ($year < 1700) { $m = 22; $n = 2; }
     elsif ($year < 1800) { $m = 23; $n = 3; }
@@ -1053,113 +1060,112 @@ sub Easter_Sunday
     $month = 3;
     if ($day > 31)
     {
-        $day -= 31; # same as $day = $d + $e - 9; 
+        $day -= 31; # same as $day = $d + $e - 9;
         $month++;
     }
     if (($day == 26) && ($month == 4))
-	{
-		$day = 19;
-	}
-    if (($day == 25) && ($month == 4) && 
+    {
+        $day = 19;
+    }
+    if (($day == 25) && ($month == 4) &&
         ($d == 28) && ($e == 6) && ($a > 10))
-	{
-		$day = 18;
-	}
+    {
+        $day = 18;
+    }
     return ($year, $month, $day);
 }
 
-#  Carnival Monday / Rosenmontag / Veille du Mardi Gras   =  easter sunday - 48  
-#  Mardi Gras / Karnevalsdienstag / Mardi Gras            =  easter sunday - 47  
-#  Ash Wednesday / Aschermittwoch / Mercredi des Cendres  =  easter sunday - 46  
-#  Palm Sunday / Palmsonntag / Dimanche des Rameaux       =  easter sunday - 7   
-#  Easter Friday / Karfreitag / Vendredi Saint            =  easter sunday - 2   
-#  Easter Saturday / Ostersamstag / Samedi de Paques      =  easter sunday - 1   
-#  Easter Monday / Ostermontag / Lundi de Paques          =  easter sunday + 1   
-#  Ascension of Christ / Christi Himmelfahrt / Ascension  =  easter sunday + 39  
-#  Whitsunday / Pfingstsonntag / Dimanche de Pentecote    =  easter sunday + 49  
-#  Whitmonday / Pfingstmontag / Lundi de Pentecote        =  easter sunday + 50  
-#  Feast of Corpus Christi / Fronleichnam / Fete-Dieu     =  easter sunday + 60  
-
+#  Carnival Monday / Rosenmontag / Veille du Mardi Gras   =  easter sunday - 48
+#  Mardi Gras / Karnevalsdienstag / Mardi Gras            =  easter sunday - 47
+#  Ash Wednesday / Aschermittwoch / Mercredi des Cendres  =  easter sunday - 46
+#  Palm Sunday / Palmsonntag / Dimanche des Rameaux       =  easter sunday - 7
+#  Easter Friday / Karfreitag / Vendredi Saint            =  easter sunday - 2
+#  Easter Saturday / Ostersamstag / Samedi de Paques      =  easter sunday - 1
+#  Easter Monday / Ostermontag / Lundi de Paques          =  easter sunday + 1
+#  Ascension of Christ / Christi Himmelfahrt / Ascension  =  easter sunday + 39
+#  Whitsunday / Pfingstsonntag / Dimanche de Pentecote    =  easter sunday + 49
+#  Whitmonday / Pfingstmontag / Lundi de Pentecote        =  easter sunday + 50
+#  Feast of Corpus Christi / Fronleichnam / Fete-Dieu     =  easter sunday + 60
 
 sub Decode_Month
 {
-	my ($month_str) = @_;
-	my ($month, $len, $n_matched);
+    my ($month_str) = @_;
+    my ($month, $len, $n_matched);
 
-	$n_matched = 0;
-	$len = length $month_str;
+    $n_matched = 0;
+    $len = length $month_str;
 
-	$month_str = uc $month_str ;
-	for ($month=1; $month<=12; $month++)
-	{
-		if ($month_str eq substr((uc $arr_Month_to_Text[$pcalc_Language][$month]), 0, $len))
-		{
-			if ($n_matched > 0)
-			{
-				return 0;
-			}
-			$n_matched = $month;
-		}
-	}
-	return $n_matched;
+    $month_str = uc $month_str ;
+    for ($month=1; $month<=12; $month++)
+    {
+        if ($month_str eq substr((uc $arr_Month_to_Text[$pcalc_Language][$month]), 0, $len))
+        {
+            if ($n_matched > 0)
+            {
+                return 0;
+            }
+            $n_matched = $month;
+        }
+    }
+    return $n_matched;
 }
 
 sub Decode_Day_of_Week
 {
-	my ($day_str) = @_;
-	my ($day, $len, $n_matched);
+    my ($day_str) = @_;
+    my ($day, $len, $n_matched);
 
-	$len = length $day_str;
-	$n_matched = 0;
+    $len = length $day_str;
+    $n_matched = 0;
 
-	$day_str = uc $day_str ;
-	for ($day=1; $day<=7; $day++)
-	{
-		if ($day_str eq substr((uc $arr_Day_of_Week_to_Text[$pcalc_Language][$day]), 0, $len))
-		{
-			if ($n_matched > 0)
-			{
-				return 0;
-			}
-			else
-			{
-				$n_matched = $day;
-			}
-		}
-	}
-	return $n_matched;
+    $day_str = uc $day_str ;
+    for ($day=1; $day<=7; $day++)
+    {
+        if ($day_str eq substr((uc $arr_Day_of_Week_to_Text[$pcalc_Language][$day]), 0, $len))
+        {
+            if ($n_matched > 0)
+            {
+                return 0;
+            }
+            else
+            {
+                $n_matched = $day;
+            }
+        }
+    }
+    return $n_matched;
 }
 
 sub Decode_Language
 {
-	my ($lang_str) = @_;
-	my ($lang, $len, $n_matched);
+    my ($lang_str) = @_;
+    my ($lang, $len, $n_matched);
 
-	$len = length $lang_str;
-	$n_matched = 0;
+    $len = length $lang_str;
+    $n_matched = 0;
 
-	$lang_str = uc $lang_str ;
-	for ($lang=1; $lang<=$pcalc_Languages; $lang++)
-	{
-		if ($lang_str eq substr((uc $arr_Language_to_Text[$lang]), 0, $len))
-		{
-			if ($n_matched > 0)
-			{
-				return 0;
-			}
-			else
-			{
-				$n_matched = $lang;
-			}
-		}
-	}
-	return $n_matched;
+    $lang_str = uc $lang_str ;
+    for ($lang=1; $lang<=$pcalc_Languages; $lang++)
+    {
+        if ($lang_str eq substr((uc $arr_Language_to_Text[$lang]), 0, $len))
+        {
+            if ($n_matched > 0)
+            {
+                return 0;
+            }
+            else
+            {
+                $n_matched = $lang;
+            }
+        }
+    }
+    return $n_matched;
 }
 
 sub Compress
 {
     my ($year, $month, $day) = @_;
-	my $yy;
+    my $yy;
 
     if (($year >= $Epoch) && ($year < ($Epoch + 100)))
     {
@@ -1169,9 +1175,9 @@ sub Compress
     else
     {
         if (($year < 0) || ($year > 99))
-		{
-			return(0);
-		}
+        {
+            return(0);
+        }
         if ($year < $Year_of_Epoch)
         {
             $yy = $Century_of_Epoch + 100 + $year;
@@ -1184,28 +1190,28 @@ sub Compress
         }
     }
     if (($month < 1) || ($month > 12))
-	{
-		return(0);
-	}
+    {
+        return(0);
+    }
     if (($day < 1) ||
         ($day > $arr_Days_in_Month[leap_year($yy)][$month]))
-	{
+    {
       return(0);
-	}
+    }
     return( ($year << 9) | ($month << 5) | $day );
 }
 
 sub Uncompress
 {
-	my ($date) = @_;
-	my ($century, $year, $month, $day);
-	if ($date > 0)
-	{
-		$year = $date >> 9;
-		$month = ($date & 0x01ff) >> 5;
-		$day = $date & 0x001f;
+    my ($date) = @_;
+    my ($century, $year, $month, $day);
+    if ($date > 0)
+    {
+        $year = $date >> 9;
+        $month = ($date & 0x01ff) >> 5;
+        $day = $date & 0x001f;
 
-		if ($year < 100)
+        if ($year < 100)
         {
             if ($year < 100 - $Year_of_Epoch)
             {
@@ -1218,273 +1224,273 @@ sub Uncompress
                 $year -= 100 - $Year_of_Epoch;
             }
 
-			if (check_date($century + $year, $month, $day))
-			{
-				return ($century, $year, $month, $day);
-			}
+            if (check_date($century + $year, $month, $day))
+            {
+                return ($century, $year, $month, $day);
+            }
         }
-	}
-	return ();
+    }
+    return ();
 }
 
 sub check_compressed
 {
-	my ($date) = @_;
-	return (Uncompress($date)) ? 1 : 0;
+    my ($date) = @_;
+    return (Uncompress($date)) ? 1 : 0;
 }
 
 sub Compressed_to_Text
 {
-	my ($date) = @_;
-	my $str;
-	my ($century, $year, $month, $day) =
-		Uncompress($date);
-	if (defined $century)
-	{
-		$str = sprintf "%02d-%.3s-%02d", $day,
-			$arr_Month_to_Text[$pcalc_Language][$month], $year;
-	}
-	else
-	{
-		$str = "??-???-??";
-	}
-	return $str;
+    my ($date) = @_;
+    my $str;
+    my ($century, $year, $month, $day) =
+        Uncompress($date);
+    if (defined $century)
+    {
+        $str = sprintf "%02d-%.3s-%02d", $day,
+            $arr_Month_to_Text[$pcalc_Language][$month], $year;
+    }
+    else
+    {
+        $str = "??-???-??";
+    }
+    return $str;
 }
 
 sub Date_to_Text
 {
-	my ($year, $month, $day) = @_;
-	my $str;
+    my ($year, $month, $day) = @_;
+    my $str;
 
-	if (check_date($year, $month, $day))
-	{
-		if ($arr_Day_of_Week_Abbreviation[$pcalc_Language][0] ne "")
-		{
-			$str = sprintf "%.3s %d-%.3s-%d", 
-				$arr_Day_of_Week_Abbreviation[$pcalc_Language][Day_of_Week($year, $month, $day)],
-				$day, $arr_Month_to_Text[$pcalc_Language][$month], $year;
-		}
-		else
-		{
-			$str = sprintf "%.3s %d-%.3s-%d",
-				$arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
-				$day, $arr_Month_to_Text[$pcalc_Language][$month], $year;
-		}
-		return $str;
-	}
-	return "";
+    if (check_date($year, $month, $day))
+    {
+        if ($arr_Day_of_Week_Abbreviation[$pcalc_Language][0] ne "")
+        {
+            $str = sprintf "%.3s %d-%.3s-%d",
+                $arr_Day_of_Week_Abbreviation[$pcalc_Language][Day_of_Week($year, $month, $day)],
+                $day, $arr_Month_to_Text[$pcalc_Language][$month], $year;
+        }
+        else
+        {
+            $str = sprintf "%.3s %d-%.3s-%d",
+                $arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
+                $day, $arr_Month_to_Text[$pcalc_Language][$month], $year;
+        }
+        return $str;
+    }
+    return "";
 }
 
 sub Date_to_Text_Long
 {
-	my ($year, $month, $day) = @_;
-	my $str = "";
+    my ($year, $month, $day) = @_;
+    my $str = "";
 
-	if (check_date($year, $month, $day))
-	{
-		if ($pcalc_Language == 1)
-		{
-			$str = sprintf( $date_long_format[$pcalc_Language],
-			$arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
-			$arr_Month_to_Text[$pcalc_Language][$month], 
-			English_Ordinal($day), $year);
-		}
-		else
-		{
-			$str = sprintf( $date_long_format[$pcalc_Language],
-			$arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
-			$day,
-			$arr_Month_to_Text[$pcalc_Language][$month], 
-			$year);
-		}
-	}
-	return $str;
+    if (check_date($year, $month, $day))
+    {
+        if ($pcalc_Language == 1)
+        {
+            $str = sprintf( $date_long_format[$pcalc_Language],
+            $arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
+            $arr_Month_to_Text[$pcalc_Language][$month],
+            English_Ordinal($day), $year);
+        }
+        else
+        {
+            $str = sprintf( $date_long_format[$pcalc_Language],
+            $arr_Day_of_Week_to_Text[$pcalc_Language][Day_of_Week($year, $month, $day)],
+            $day,
+            $arr_Month_to_Text[$pcalc_Language][$month],
+            $year);
+        }
+    }
+    return $str;
 }
 
 sub English_Ordinal
 {
-	my ($n) = @_;
-	my $digit = 0;
-	my $mod;
+    my ($n) = @_;
+    my $digit = 0;
+    my $mod;
 
-	$mod = $n % 10;
-	if ($mod <= 3)
-	{
-		if (int (($n % 100) / 10) != 1)
-		{
-			$digit = $mod;
-		}
-	}
-	return $n . $english_ordinal_suffix[$digit];
+    $mod = $n % 10;
+    if ($mod <= 3)
+    {
+        if (int (($n % 100) / 10) != 1)
+        {
+            $digit = $mod;
+        }
+    }
+    return $n . $english_ordinal_suffix[$digit];
 }
 
 sub Center
 {
-	my ($str, $width) = @_;
-	my $len;
+    my ($str, $width) = @_;
+    my $len;
 
-	$len = length $str;
-	if ($len > $width)
-	{
-		$len = $width;
-	}
-	return (' ' x (($width-$len) >> 1)) . $str;
+    $len = length $str;
+    if ($len > $width)
+    {
+        $len = $width;
+    }
+    return (' ' x (($width-$len) >> 1)) . $str;
 }
 
 sub Calendar
 {
-	my ($year, $month) = @_;
-	my ($first, $last, $day, $buf, $arr_ref);
-	my $str = "\n";
+    my ($year, $month) = @_;
+    my ($first, $last, $day, $buf, $arr_ref);
+    my $str = "\n";
 
-	if ($year > 0)
-	{
-		if (($month >= 1) && ($month <= 12))
-		{
-			$buf = $arr_Month_to_Text[$pcalc_Language][$month] . " " . $year;
-			$buf = Center($buf, 27) . "\n";
-			$str .= $buf;
-			$arr_ref = ($arr_Day_of_Week_Abbreviation[$pcalc_Language][0] ne "") ?  
-				\@arr_Day_of_Week_Abbreviation :
-				\@arr_Day_of_Week_to_Text;
-        	$buf = sprintf("%3.3s %3.3s %3.3s %3.3s %3.3s %3.3s %3.3s\n",
-          		$$arr_ref[$pcalc_Language][1],
-			  	$$arr_ref[$pcalc_Language][2],
-			  	$$arr_ref[$pcalc_Language][3],
-			  	$$arr_ref[$pcalc_Language][4],
-			  	$$arr_ref[$pcalc_Language][5],
-			  	$$arr_ref[$pcalc_Language][6],
-			  	$$arr_ref[$pcalc_Language][7]);
-			$str = $str . $buf;
-			$first = Day_of_Week($year, $month, 1);
-			$last = $arr_Days_in_Month[leap_year($year)][$month];
-			if (--$first > 0)
-			{
-				$str .= ' ' x (($first << 2) - 1);
-			}
-			for ($day = 1; $day <= $last; $day++,$first++)
-			{
-				if ($first > 0)
-				{
-					if ($first > 6)
-					{
-						$first = 0;
-						$str .= "\n";
-					}
-					else
-					{
-						$str .= " ";
-					}
-				}
-				$buf = sprintf(" %2d", $day);
-				$str .= $buf;
-			}
-			$str .= "\n\n";
-			return $str;
-		}
-		else
-		{
-			DATECALC_MONTH_ERROR("Calendar");
-		}
-	}
-	else
-	{
-		DATECALC_YEAR_ERROR("Calendar");
-	}
+    if ($year > 0)
+    {
+        if (($month >= 1) && ($month <= 12))
+        {
+            $buf = $arr_Month_to_Text[$pcalc_Language][$month] . " " . $year;
+            $buf = Center($buf, 27) . "\n";
+            $str .= $buf;
+            $arr_ref = ($arr_Day_of_Week_Abbreviation[$pcalc_Language][0] ne "") ?
+                \@arr_Day_of_Week_Abbreviation :
+                \@arr_Day_of_Week_to_Text;
+            $buf = sprintf("%3.3s %3.3s %3.3s %3.3s %3.3s %3.3s %3.3s\n",
+                  $$arr_ref[$pcalc_Language][1],
+                  $$arr_ref[$pcalc_Language][2],
+                  $$arr_ref[$pcalc_Language][3],
+                  $$arr_ref[$pcalc_Language][4],
+                  $$arr_ref[$pcalc_Language][5],
+                  $$arr_ref[$pcalc_Language][6],
+                  $$arr_ref[$pcalc_Language][7]);
+            $str = $str . $buf;
+            $first = Day_of_Week($year, $month, 1);
+            $last = $arr_Days_in_Month[leap_year($year)][$month];
+            if (--$first > 0)
+            {
+                $str .= ' ' x (($first << 2) - 1);
+            }
+            for ($day = 1; $day <= $last; $day++,$first++)
+            {
+                if ($first > 0)
+                {
+                    if ($first > 6)
+                    {
+                        $first = 0;
+                        $str .= "\n";
+                    }
+                    else
+                    {
+                        $str .= " ";
+                    }
+                }
+                $buf = sprintf(" %2d", $day);
+                $str .= $buf;
+            }
+            $str .= "\n\n";
+            return $str;
+        }
+        else
+        {
+            DATECALC_MONTH_ERROR("Calendar");
+        }
+    }
+    else
+    {
+        DATECALC_YEAR_ERROR("Calendar");
+    }
 }
 
 sub Month_to_Text
 {
-	my ($month) = @_;
+    my ($month) = @_;
 
-	if (($month >= 1) && ($month <= 12))
-	{
-		return $arr_Month_to_Text[$pcalc_Language][$month];
-	}
-	else
-	{
-		DATECALC_MONTH_ERROR("Month_to_Text");
-	}
+    if (($month >= 1) && ($month <= 12))
+    {
+        return $arr_Month_to_Text[$pcalc_Language][$month];
+    }
+    else
+    {
+        DATECALC_MONTH_ERROR("Month_to_Text");
+    }
 }
 
 sub Day_of_Week_to_Text
 {
-	my ($dow) = @_;
+    my ($dow) = @_;
 
-	if (($dow >= 1) && ($dow <= 7))
-	{
-		return $arr_Day_of_Week_to_Text[$pcalc_Language][$dow];
-	}
-	else
-	{
-		DATECALC_DAYOFWEEK_ERROR("Day_of_Week_to_Text");
-	}
+    if (($dow >= 1) && ($dow <= 7))
+    {
+        return $arr_Day_of_Week_to_Text[$pcalc_Language][$dow];
+    }
+    else
+    {
+        DATECALC_DAYOFWEEK_ERROR("Day_of_Week_to_Text");
+    }
 }
 
 sub Day_of_Week_Abbreviation
 {
-	my ($dow) = @_;
+    my ($dow) = @_;
 
-	if (($dow >= 1) && ($dow <= 7))
-	{
-		if ($arr_Day_of_Week_Abbreviation[$pcalc_Language][$dow])
-		{
-			return $arr_Day_of_Week_Abbreviation[$pcalc_Language][$dow];
-		}
-		else
-		{
-			return substr $arr_Day_of_Week_to_Text[$pcalc_Language][$dow], 0, 3;
-		}
-	}
-	else
-	{
-		DATECALC_DAYOFWEEK_ERROR("Day_of_Week_to_Text");
-	}
+    if (($dow >= 1) && ($dow <= 7))
+    {
+        if ($arr_Day_of_Week_Abbreviation[$pcalc_Language][$dow])
+        {
+            return $arr_Day_of_Week_Abbreviation[$pcalc_Language][$dow];
+        }
+        else
+        {
+            return substr $arr_Day_of_Week_to_Text[$pcalc_Language][$dow], 0, 3;
+        }
+    }
+    else
+    {
+        DATECALC_DAYOFWEEK_ERROR("Day_of_Week_to_Text");
+    }
 }
 
 sub Language_to_Text
 {
-	my ($lang) = @_;
+    my ($lang) = @_;
 
-	if (($lang >= 1) && ($lang <= $pcalc_Languages))
-	{
-		return $arr_Language_to_Text[$lang];
-	}
+    if (($lang >= 1) && ($lang <= $pcalc_Languages))
+    {
+        return $arr_Language_to_Text[$lang];
+    }
 }
 
 sub Language
 {
-	my ($lang) = @_;
-	my ($items, $previous_language);
+    my ($lang) = @_;
+    my ($items, $previous_language);
 
-	$items = scalar @_;
+    $items = scalar @_;
 
-	$previous_language = $pcalc_Language;
+    $previous_language = $pcalc_Language;
 
-	if (($items >= 0) && ($items <= 1))
-	{
-		if ($items == 1)
-		{
-			if (($lang >= 1) && ($lang <= $pcalc_Languages))
-			{
-				$pcalc_Language = $lang;
-			}
-			else
-			{
-				DATECALC_LANGUAGE_ERROR("Language");
-			}
-		}
-	}
-	else
-	{
-		croak('Usage: [$lang = ] Date::Pcalc::Language( [$lang] );');
-	}
-	return $previous_language;
+    if (($items >= 0) && ($items <= 1))
+    {
+        if ($items == 1)
+        {
+            if (($lang >= 1) && ($lang <= $pcalc_Languages))
+            {
+                $pcalc_Language = $lang;
+            }
+            else
+            {
+                DATECALC_LANGUAGE_ERROR("Language");
+            }
+        }
+    }
+    else
+    {
+        croak('Usage: [$lang = ] Date::Pcalc::Language( [$lang] );');
+    }
+    return $previous_language;
 }
 
 sub Languages
 {
-	return $pcalc_Languages;
+    return $pcalc_Languages;
 }
 
 sub Decode_Date_EU
@@ -1492,9 +1498,9 @@ sub Decode_Date_EU
     croak "Usage: (\$year,\$month,\$day) = Decode_Date_EU(\$date);"
       if (@_ != 1);
 
-	my ($date ) = @_;
+    my ($date ) = @_;
 
-	return Decode_Date_EU2( $date );
+    return Decode_Date_EU2( $date );
 }
 
 sub Decode_Date_EU2
@@ -1563,13 +1569,13 @@ sub Decode_Date_EU2
     else { return(); } # no match at all!
 
     if ($year < 100)
-	{
-		if ($year < $Year_of_Epoch )
-		{
-			$year += 100;
-		}
-		$year += $Century_of_Epoch;
-	}
+    {
+        if ($year < $Year_of_Epoch )
+        {
+            $year += 100;
+        }
+        $year += $Century_of_Epoch;
+    }
 
     if (check_date($year,$month,$day))
     {
@@ -1582,8 +1588,8 @@ sub Decode_Date_US
 {
     croak "Usage: (\$year,\$month,\$day) = Decode_Date_US(\$date);"
       if (@_ != 1);
- 	my ($date) = @_;
-	return Decode_Date_US2( $date );
+     my ($date) = @_;
+    return Decode_Date_US2( $date );
 }
 
 sub Decode_Date_US2
@@ -1688,13 +1694,13 @@ sub Decode_Date_US2
     else { return(); } # no match at all!
 
     if ($year < 100)
-	{
-		if ($year < $Year_of_Epoch)
-		{
-			$year += 100;
-		}
-		$year += $Century_of_Epoch;
-	}
+    {
+        if ($year < $Year_of_Epoch)
+        {
+            $year += 100;
+        }
+        $year += $Century_of_Epoch;
+    }
 
     if (check_date($year,$month,$day))
     {
@@ -1733,14 +1739,20 @@ sub Parse_Date
     return($year,$month,$day);
 }
 
+sub Version()
+{
+    return $VERSION;
+}
+
 1;
 
 #
 #
-#	Subsequent documentation taken verbatim from
-#	Date::Calc version 4.2
+#    Subsequent documentation taken verbatim from
+#    Date::Calc version 4.2
 #
 #
+
 __END__
 
 =head1 NAME
@@ -2636,7 +2648,7 @@ The original distribution supports the following seven languages:
             Español     (Spanish)      ==>   4
             Português   (Portuguese)   ==>   5
             Nederlands  (Dutch)        ==>   6
-			Italiano    (Italian)      ==>   7
+            Italiano    (Italian)      ==>   7
 
 See the section "How to install additional languages" in the file
 "INSTALL.txt" in this distribution for how to add more languages
@@ -3058,13 +3070,13 @@ when the internal number representing that language is given as input.
 
 The original distribution supports the following seven languages:
 
-            1   ==>   English                     (default)
+            1   ==>   English     (default)
             2   ==>   Français    (French)
             3   ==>   Deutsch     (German)
             4   ==>   Español     (Spanish)
             5   ==>   Português   (Portuguese)
             6   ==>   Nederlands  (Dutch)
-			7   ==>   Italiano    (Italian)
+            7   ==>   Italiano    (Italian)
 
 See the section "How to install additional languages" in the file
 "INSTALL.txt" in this distribution for how to add more languages
@@ -3093,13 +3105,13 @@ Thereby, each language has a unique internal number.
 
 The original distribution contains the following seven languages:
 
-            1   ==>   English                     (default)
+            1   ==>   English     (default)
             2   ==>   Français    (French)
             3   ==>   Deutsch     (German)
             4   ==>   Español     (Spanish)
             5   ==>   Português   (Portuguese)
             6   ==>   Nederlands  (Dutch)
-			7	==>   Italiano    (Italian)
+            7   ==>   Italiano    (Italian)
 
 See the section "How to install additional languages" in the file
 "INSTALL.txt" in this distribution for how to add more languages
@@ -3759,23 +3771,9 @@ because it doesn't take legal holidays into account.
 
 =head1 SEE ALSO
 
-perl(1), perlfunc(1), perlsub(1), perlmod(1),
-perlxs(1), perlxstut(1), perlguts(1).
-
-news:news.answers
-"Calendar FAQ, v. 1.9 (modified 25 Apr 1998) Part 1/3"
-
-news:news.answers
-"Calendar FAQ, v. 1.9 (modified 25 Apr 1998) Part 2/3"
-
-news:news.answers
-"Calendar FAQ, v. 1.9 (modified 25 Apr 1998) Part 3/3"
-
-http://www.math.uio.no/faq/calendars/faq.html
-
-http://www.pip.dknet.dk/~pip10160/calendar.html
-
-(All authored by Claus Tondering <c-t@pip.dknet.dk>)
+  "The Calendar FAQ":
+  http://www.tondering.dk/claus/calendar.html
+  by Claus Tondering <claus@tondering.dk>
 
 =head1 LIMITATIONS
 
@@ -3789,9 +3787,10 @@ for B<ALL OTHER> processes or threads as well).
 
 =head1 VERSION
 
-This man page documents "Date::Pcalc" version 1.0.
+This man page documents "Date::Pcalc" version 1.2.
 
 =head1 AUTHOR
+
   J. David Eisenberg
   4604 Corrida Circle
   San Jose, California 95129
@@ -3808,18 +3807,14 @@ my translation of the original C code to perl.
 Anything that works does so because it was written
 correctly by the original author:
 
-
   Steffen Beyer
-
   mailto:sb@engelschall.com
   http://www.engelschall.com/u/sb/download/
 
-B<Please contact him by e-mail whenever possible!>
-
 =head1 COPYRIGHT
 
-Copyright (c) 1999 by J. David Eisenberg; portions
-Copyright (c) 1995, 1996, 1997, 1998 by Steffen Beyer.
+Copyright (c) 1999-2001 by J. David Eisenberg; portions
+Copyright (c) 1993-2001 by Steffen Beyer.
 All rights reserved.
 
 =head1 LICENSE
@@ -3828,12 +3823,8 @@ This package is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself, i.e., under the
 terms of the "Artistic License" or the "GNU General Public License".
 
-The C library at the core of this Perl module can additionally
-be redistributed and/or modified under the terms of the
-"GNU Library General Public License".
-
-Please refer to the files "Artistic.txt", "GNU_GPL.txt" and
-"GNU_LGPL.txt" in this distribution for details!
+Please refer to the files "Artistic.txt" and "GNU_GPL.txt" in this
+distribution for details!
 
 =head1 DISCLAIMER
 
@@ -3842,4 +3833,6 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the "GNU General Public License" for more details.
-==cut
+
+=cut
+

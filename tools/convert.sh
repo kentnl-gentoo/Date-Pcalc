@@ -26,7 +26,7 @@ convert ()
         mv $source $target
     fi
     echo "$self: converting '$target' to '$source'..."
-    ./iso2pc.pl -dos <$target >$source
+    perl ./iso2pc.pl -dos <$target >$source
 }
 
 convert '../Pcalc.pm'

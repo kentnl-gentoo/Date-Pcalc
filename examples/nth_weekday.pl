@@ -16,7 +16,7 @@ no strict "vars";
 $self = $0;
 $self =~  s!^.*/!!;
 
-#	changed to Pcalc 3-Aug-1999 (Eisenberg)
+#   Changed to Date::Pcalc 3-Aug-1999 (Eisenberg)
 
 use Date::Pcalc qw( Decode_Month Month_to_Text Nth_Weekday_of_Month_Year
                    Decode_Day_of_Week Day_of_Week Day_of_Week_to_Text );

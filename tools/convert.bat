@@ -25,7 +25,7 @@ goto cont3
 
 
 echo %0: converting 'Pcalc.pm_' to 'Pcalc.pm'...
-tools\iso2pc.pl -win <Pcalc.pm_ >Pcalc.pm
+perl tools\iso2pc.pl -win <Pcalc.pm_ >Pcalc.pm
 
 cd examples
 
@@ -46,10 +46,10 @@ goto cont7
 :cont7
 
 echo %0: converting 'age_in_days_eu.pl_' to 'age_in_days_eu.pl'...
-..\tools\iso2pc.pl -win <age_in_days_eu.pl_ >age_in_days_eu.pl
+perl ..\tools\iso2pc.pl -win <age_in_days_eu.pl_ >age_in_days_eu.pl
 
 echo %0: converting 'age_in_days_us.pl_' to 'age_in_days_us.pl'...
-..\tools\iso2pc.pl -win <age_in_days_us.pl_ >age_in_days_us.pl
+perl ..\tools\iso2pc.pl -win <age_in_days_us.pl_ >age_in_days_us.pl
 
 cd ..\tools
 

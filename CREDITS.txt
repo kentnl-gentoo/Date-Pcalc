@@ -1,16 +1,10 @@
-                     ====================================
-                       Package "Date::Pcalc" Version 1.0
-                     ====================================
+                     =====================================
+                       Package "Date::Pcalc" Version 1.2
+                     =====================================
 
-			Copyright (c) 1999 by J. David Eisenberg
-
-			Based on
-
-                     ====================================
-                       Package "Date::Calc" Version 4.2
-                     ====================================
-
-            Copyright (c) 1995, 1996, 1997, 1998 by Steffen Beyer.
+                  Copyright (c) 1999-2001 J. David Eisenberg,
+                                 based on work
+                   Copyright (c) 1993-2001 by Steffen Beyer.
                              All rights reserved.
 
 

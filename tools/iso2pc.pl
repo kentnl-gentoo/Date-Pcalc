@@ -1,5 +1,4 @@
-#!/usr/bin/perl
-
+#!perl
 
 #    This application is a typical UNIX filter designed to convert
 #    special characters (with ASCII codes ranging from "\x80 to 0xFF)
@@ -56,31 +55,31 @@
 #
 #    "-v" and "-rev" are toggle switches, i.e., specifying this option
 #    twice is the same as not specifying it at all.
-    
-$inorder = 
-		"\x80\x81\x82\x83\x84\x85\x86\x87" .
-		"\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F" .
 
-		"\x90\x91\x92\x93\x94\x95\x96\x97" .
-		"\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F" .
+$inorder =
+        "\x80\x81\x82\x83\x84\x85\x86\x87" .
+        "\x88\x89\x8A\x8B\x8C\x8D\x8E\x8F" .
 
-		"\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7" .
-		"\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF" .
+        "\x90\x91\x92\x93\x94\x95\x96\x97" .
+        "\x98\x99\x9A\x9B\x9C\x9D\x9E\x9F" .
 
-		"\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7" .
-		"\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF" .
+        "\xA0\xA1\xA2\xA3\xA4\xA5\xA6\xA7" .
+        "\xA8\xA9\xAA\xAB\xAC\xAD\xAE\xAF" .
 
-		"\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7" .
-		"\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF" .
+        "\xB0\xB1\xB2\xB3\xB4\xB5\xB6\xB7" .
+        "\xB8\xB9\xBA\xBB\xBC\xBD\xBE\xBF" .
 
-		"\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7" .
-		"\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF" .
+        "\xC0\xC1\xC2\xC3\xC4\xC5\xC6\xC7" .
+        "\xC8\xC9\xCA\xCB\xCC\xCD\xCE\xCF" .
 
-		"\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7" .
-		"\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF" .
+        "\xD0\xD1\xD2\xD3\xD4\xD5\xD6\xD7" .
+        "\xD8\xD9\xDA\xDB\xDC\xDD\xDE\xDF" .
 
-		"\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7" .
-		"\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF" ;
+        "\xE0\xE1\xE2\xE3\xE4\xE5\xE6\xE7" .
+        "\xE8\xE9\xEA\xEB\xEC\xED\xEE\xEF" .
+
+        "\xF0\xF1\xF2\xF3\xF4\xF5\xF6\xF7" .
+        "\xF8\xF9\xFA\xFB\xFC\xFD\xFE\xFF" ;
 
 @iso2pc = (
         "\xB0\xB1\xB2\xB5\xB6\xB7\xBA\xBC" .
@@ -129,9 +128,8 @@ $inorder =
         "\x8A\x82\x88\x89\x8D\xA1\x8C\x8B" .
 
         "\xD0\xA4\x95\xA2\x93\xE4\x94\xF6" .
-        "\x9B\x97\xA3\x96\x81\xEC\xE7\x98" 
+        "\x9B\x97\xA3\x96\x81\xEC\xE7\x98"
 );
-
 
 @pc2iso = (
         "\xC7\xFC\xE9\xE2\xE4\xE0\xE5\xE7" .
@@ -156,8 +154,8 @@ $inorder =
         "\x97\x98\x99\xF0\x9A\xF8\x9B\x9C" .
 
         "\x9D\xB1\x9F\xA0\xA4\xF5\xF7\xA8" .
-        "\xB0\xB7\xAE\xAF\xB3\xB2\xFE\xFD" 
-	,	
+        "\xB0\xB7\xAE\xAF\xB3\xB2\xFE\xFD"
+    ,
         "\xC7\xFC\xE9\xE2\xE4\xE0\xE5\xE7" .
         "\xEA\xEB\xE8\xEF\xEE\xEC\xC4\xC5" .
 
@@ -190,35 +188,35 @@ $err = 0;
 
 for ($i = 0; $i < scalar @ARGV; $i++)
 {
-	$option = $ARGV[$i];
-	if ($option =~ /^\-/)
-	{
-		$option =~ s/^\-//;
-		if ($option eq "v")    { $reverse = !$reverse;}
-		elsif ($option eq "d") { $charset = 0; }
-		elsif ($option eq "w") { $charset = 1; }
-		elsif ($option eq "vd" || $option eq "dv")
-		{
-			$reverse = !$reverse; $charset = 0;
-		}
-		elsif ($option eq "vw" || $option eq "wv")
-		{
-			$reverse = !$reverse; $charset = 1;
-		}
-		elsif ($option eq "rev") { $reverse = !$reverse; }
-		elsif ($option eq "dos") { $charset = 0; }
-		elsif ($option eq "win") { $charset = 1; }
-		else
-		{
-			die "$0: unknown option $option\n";
-		}
-	}
+    $option = $ARGV[$i];
+    if ($option =~ /^\-/)
+    {
+        $option =~ s/^\-//;
+        if ($option eq "v")    { $reverse = !$reverse;}
+        elsif ($option eq "d") { $charset = 0; }
+        elsif ($option eq "w") { $charset = 1; }
+        elsif ($option eq "vd" || $option eq "dv")
+        {
+            $reverse = !$reverse; $charset = 0;
+        }
+        elsif ($option eq "vw" || $option eq "wv")
+        {
+            $reverse = !$reverse; $charset = 1;
+        }
+        elsif ($option eq "rev") { $reverse = !$reverse; }
+        elsif ($option eq "dos") { $charset = 0; }
+        elsif ($option eq "win") { $charset = 1; }
+        else
+        {
+            die "$0: unknown option $option\n";
+        }
+    }
 }
 
 $newlist = ($reverse) ? $pc2iso[$charset] : $iso2pc[$charset];
 while (<STDIN>)
 {
-	eval "tr/$inorder/$newlist/";
-	print;
+    eval "tr/$inorder/$newlist/";
+    print;
 }
 

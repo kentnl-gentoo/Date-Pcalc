@@ -49,7 +49,7 @@ sub convert
         }
     }
     print "$self: converting '$target' to '$source'...\n";
-    $rc = system("./iso2pc.pl $charset <$target >$source");
+    $rc = system("perl ./iso2pc.pl $charset <$target >$source");
     if ($rc >> 8)
     {
         warn "$self: unable to convert '$target' to '$source'!\n";

@@ -1,9 +1,10 @@
                      =====================================
-                       Package "Date::pCalc" Version 1.0 
+                       Package "Date::Pcalc" Version 1.2
                      =====================================
 
-			Copyright (c) 1999 J. David Eisenberg, with parts
-            Copyright (c) 1995, 1996, 1997, 1998 by Steffen Beyer.
+                  Copyright (c) 1999-2001 J. David Eisenberg,
+                                 based on work
+                   Copyright (c) 1993-2001 by Steffen Beyer.
                              All rights reserved.
 
 
@@ -15,7 +16,7 @@ in the "examples" subdirectory of this distribution:
 
                         examples/age_in_days_eu.pl
                         examples/age_in_days_us.pl
-						examples/cal.pl
+                        examples/cal.pl
                         examples/nth_weekday.pl
 
 
@@ -99,7 +100,7 @@ and runs perfectly well on pure MS-DOS or other Windows systems!)
 The first parameter is the month, the second is the year,
 and the third is the desired language (currently 1..6 or "English",
 "Français", "Deutsch", "Español", "Português" and "Nederlands"),
-the second the month and the third the year. The third parameter 
+the second the month and the third the year. The third parameter
 is optional; if not given, the language will be the module's
 default language (given in the variable $pcalc_Language).
 
@@ -129,7 +130,7 @@ GNU/Linux or FreeBSD console), you might want to pipe its output through
 the "iso2pc" filter from the "tools" subdirectory (see the file "TOOLS.txt"
 of the original Date::Calc distribution for instructions on how to compile
 and install this filter), in order to convert the special international
-characters from the ISO-Latin-1 character set (used throughout this package) 
+characters from the ISO-Latin-1 character set (used throughout this package)
 to one of the (two) character sets commonly used on PC's, as follows:
 
                     > cal.pl Mar 1998 Portug | iso2pc [-dos]

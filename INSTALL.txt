@@ -1,9 +1,10 @@
-                     ====================================
-                       Package "Date::Pcalc" Version 1.1
-                     ====================================
+                     =====================================
+                       Package "Date::Pcalc" Version 1.2
+                     =====================================
 
-			Copyright (c) 1999-2000 J. David Eisenberg, based on work
-                     Copyright (c) 1993-2000 by Steffen Beyer.
+                  Copyright (c) 1999-2001 J. David Eisenberg,
+                                 based on work
+                   Copyright (c) 1993-2001 by Steffen Beyer.
                              All rights reserved.
 
 
@@ -12,7 +13,7 @@ Contents:
 
     +   Prerequisites
     +   Preliminary steps for use with Perl prior to version 5.002
-    +   Preliminary steps for use with ActiveState's port of Perl 5.005
+    +   Preliminary steps for use with ActivePerl
     +   Preliminary steps for console users
     +   How to install additional languages
     +   Installation
@@ -23,8 +24,9 @@ Prerequisites:
 
 Perl version 5.000 or higher.
 
-For Windows/NT, make sure that the ".pl" extension is associated
-with Perl. 
+For Windows (95/98/NT/2000) it is recommended that you make sure
+that the ".pl" extension is associated with Perl.
+
 
 Preliminary steps for use with Perl prior to version 5.002:
 -----------------------------------------------------------
@@ -33,13 +35,19 @@ Edit the file "Makefile.PL" and change the line
 
     'VERSION_FROM'      => 'Pcalc.pm',
 to
-    'VERSION'           => '1.1',
+    'VERSION'           => '1.2',
+
+Also edit the file "t/f000.t" and change the line
+
+    use Date::Pcalc 1.2;
+to
+    use Date::Pcalc;
 
 
-Preliminary steps for use with ActiveState's port of Perl 5.005:
-----------------------------------------------------------------
+Preliminary steps for use with ActivePerl:
+------------------------------------------
 
-(For the Win32 platform)
+(I.e., for the Win32 platform)
 
 Edit the file "Makefile.PL" and remove all of the "#" characters
 which currently comment out the attributes "ABSTRACT", "AUTHOR"
@@ -67,13 +75,11 @@ You can also use
 
     > ./convert.sh
 
-under UNIX; you may have to edit the first line of files "convert.sh"
+under UNIX; you may have to edit the first line of the files "convert.sh"
 and "iso2pc.pl" to make sure that they point to the correct location
-of Perl on your system.
+of Perl on your system, though.
 
-
-Under Windows NT/95, make sure that the ".pl" extension is associated
-with Perl, and use
+Under Windows, you can use
 
     > convert.bat
 
@@ -84,12 +90,16 @@ the section "Installation" further below.
 How to install additional languages:
 ------------------------------------
 
-Unfortunately, UNIX and Windows NT/95 lack a "Resource Fork" concept
+Unfortunately, Unix and Windows lack a "Resource Fork" concept
 as provided by the MacOS (Apple Macintosh Operating System).
 
-Therefore you will have to re-edit this package whenever you
-make any changes to existing resources or if you add more
-languages.
+Therefore, each time you want to add more languages, you will
+have to either edit the installed module (the exact location
+is sometimes a little hard to find, unless you use a file search
+utility and look for "Pcalc.pm"), or this package, in which case
+you'll need to re-build and re-install it using "make" (or "dmake"
+or "nmake", under Windows), preferably, or by hand (if you know
+what you're doing).
 
 Fortunately, though, adding a new language is quite simple:
 
@@ -159,7 +169,6 @@ Edit the file "Pcalc.pm" and do the following:
    thousand different languages in this world), which is the reason why
    they are not used here.
 
-
 6) If you have never built this version of this package on the current
    machine before, just proceed with the instructions in the section
    "Installation" following immediately below.
@@ -180,10 +189,8 @@ ALWAYS unpack and build Perl modules OUTSIDE the Perl source and installation
 tree! (You might otherwise inadvertently corrupt your Perl installation!)
 =============================================================================
 
-Note that installation under Windows NT/95 is easiest with the "native"
-"Perl for Win32" port by Perl developer Gurusamy Sarathy, available from:
-
-                http://www.perl.com/CPAN/authors/id/GSAR/
+Note that installation under Windows is easiest with ActivePerl, available
+from http://www.ActiveState.com/.
 
 Quick installation guide for experienced users:
 -----------------------------------------------
@@ -200,7 +207,7 @@ Detailed installation guide:
 ----------------------------
 
  1) Change directory to the directory that has been created by unpacking this
-    package ("cd Date-Pcalc-1.0").
+    package ("cd Date-Pcalc-1.2").
 
  2) Type "perl Makefile.PL" (or whatever the name and path of your Perl 5
     binary is).
@@ -210,20 +217,18 @@ Detailed installation guide:
 
  3) Type "make".
 
-    (For installation under Windows NT/95, use "dmake" (Borland C++) or
+    (For installation under Windows, use "dmake" (Borland C++) or
     "nmake" (MS Visual C++) instead!)
-
-    Should you encounter any warnings or errors (like the redefi-
-    nition of certain types already defined by your system), please contact
-    me via e-mail at <nessus@best.com>, sending me your output
-    (both STDOUT and STDERR). Thank you!
 
  4) Now issue "make test" (or "dmake test" or "nmake test", respectively).
 
     The output should look somewhat like this:
 
-    PERL_DL_NONLAZY=1 /sw/bin/perl -I./blib/arch -I./blib/lib
-    -I/sw/pkg/perl/lib/i386-freebsd/5.00404 -I/sw/pkg/perl/lib
+    PERL_DL_NONLAZY=1 /usr/sw/bin/perl
+    -I./blib/arch
+    -I./blib/lib
+    -I/usr/sw/pkg/perl/lib/5.00503/i386-freebsd
+    -I/usr/sw/pkg/perl/lib/5.00503
     -e 'use Test::Harness qw(&runtests $verbose); $verbose=0;
     runtests @ARGV;' t/*.t
     t/f000..............ok
@@ -261,7 +266,8 @@ Detailed installation guide:
     t/f032..............ok
     t/f033..............ok
     All tests successful.
-    Files=34,  Tests=1823, 11 secs ( 9.38 cusr  0.98 csys = 10.35 cpu)
+    Files=34,  Tests=1836, 12 wallclock secs
+    ( 8.82 cusr +  1.23 csys = 10.05 CPU)
 
  5) At last, type "make install" (or "dmake install", "nmake install").
 
