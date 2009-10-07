@@ -2,7 +2,7 @@
 
 ###############################################################################
 ##                                                                           ##
-##    Copyright (c) 1998 by Steffen Beyer.                                   ##
+##    Copyright (c) 1998 - 2009 by Steffen Beyer.                            ##
 ##    All rights reserved.                                                   ##
 ##                                                                           ##
 ##    This program is free software; you can redistribute it                 ##
@@ -10,18 +10,15 @@
 ##                                                                           ##
 ###############################################################################
 
+BEGIN { eval { require bytes; }; }
 use strict;
 no strict "vars";
 
 $self = $0;
 $self =~  s!^.*/!!;
 
-#   Changed to Date::Pcalc 3-Aug-1999 (Eisenberg)
-
-use Date::Pcalc qw( Decode_Month Month_to_Text Nth_Weekday_of_Month_Year
-                   Decode_Day_of_Week Day_of_Week Day_of_Week_to_Text );
-
-%ordinal = ( 1 => 'st', 2 => 'nd', 3 => 'rd' );
+use Date::Pcalc qw( Decode_Day_of_Week Decode_Month Day_of_Week English_Ordinal
+                    Month_to_Text Day_of_Week_to_Text Nth_Weekday_of_Month_Year );
 
 if (@ARGV != 4)
 {
@@ -64,7 +61,7 @@ if ($@)
 }
 
 printf("\nThe %s %s in %s %d ",
-    ordinal($n),
+    English_Ordinal($n),
     Day_of_Week_to_Text($dow),
     Month_to_Text($mm),
     $year);
@@ -74,22 +71,12 @@ if (defined $y)
     printf("is %s, %s %s %d.\n\n",
         Day_of_Week_to_Text(Day_of_Week($y,$m,$d)),
         Month_to_Text($m),
-        ordinal($d),
+        English_Ordinal($d),
         $y);
 }
 else
 {
     print "does not exist!\n\n";
-}
-
-exit;
-
-sub ordinal
-{
-    return( $_[0] .
-        ( (substr($_[0],-2,1) ne '1') &&
-          $ordinal{substr($_[0],-1)} ||
-          'th' ) );
 }
 
 __END__

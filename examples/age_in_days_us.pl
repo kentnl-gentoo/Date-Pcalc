@@ -2,7 +2,7 @@
 
 ###############################################################################
 ##                                                                           ##
-##    Copyright (c) 1998 by Steffen Beyer.                                   ##
+##    Copyright (c) 1998 - 2009 by Steffen Beyer.                            ##
 ##    All rights reserved.                                                   ##
 ##                                                                           ##
 ##    This program is free software; you can redistribute it                 ##
@@ -10,22 +10,23 @@
 ##                                                                           ##
 ###############################################################################
 
+BEGIN { eval { require bytes; }; }
 use strict;
 no strict "vars";
 
-use Date::Pcalc qw(:all); # changed to Pcalc 3-Aug-1999 (Eisenberg)
+use Date::Pcalc qw(:all);
 
 $please_enter_birthday[0] = "Please enter the date of your birthday (month-day-year)";
 $please_enter_birthday[1] = "S.v.p. saisissez la date de votre anniversaire (mois-jour-année)";
 $please_enter_birthday[2] = "Bitte geben Sie das Datum Ihres Geburtstages ein (Monat-Tag-Jahr)";
-$please_enter_birthday[3] = "Por favor entre la data de su cumpleaños (mes-dia-año)";
+$please_enter_birthday[3] = "Por favor ingrese la fecha de su cumpleaños (mes-día-año)";
 $please_enter_birthday[4] = "Por favor entre a data do seu aniversário (mês-dia-ano)";
 $please_enter_birthday[5] = "A.u.b. geef het datum van U verjaardag in (maand-daag-jaar)";
 
 $please_enter_today[0] = "Please enter today's date (month-day-year)";
 $please_enter_today[1] = "S.v.p. saisissez la date d'aujourd'hui (mois-jour-année)";
 $please_enter_today[2] = "Bitte geben Sie das heutige Datum ein (Monat-Tag-Jahr)";
-$please_enter_today[3] = "Por favor entre la data de hoy (mes-dia-año)";
+$please_enter_today[3] = "Por favor ingrese la fecha de hoy (mes-día-año)";
 $please_enter_today[4] = "Por favor entre a data de hoje (mês-dia-ano)";
 $please_enter_today[5] = "A.u.b. geef het datum van vandaag in (maand-daag-jaar)";
 
@@ -46,7 +47,7 @@ $today_is[5] = "Vandaag is";
 $correct[0] = "Is that correct? (Yes/No)";
 $correct[1] = "Est-ce exact? (Oui/Non)";
 $correct[2] = "Ist das richtig? (Ja/Nein)";
-$correct[3] = "¿Está cierto? (Si/No)";
+$correct[3] = "¿Es esto correcto? (Si/No)";
 $correct[4] = "Está certo? (Sim/Não)";
 $correct[5] = "Is dat juist? (Ja/Nee)";
 
@@ -60,7 +61,7 @@ $yes[5] = "j";
 $you_are[0] = "You are %s days old";
 $you_are[1] = "Vous êtes âgé de %s jours";
 $you_are[2] = "Sie sind %s Tage alt";
-$you_are[3] = "Usted tiene una idad de %s dias";
+$you_are[3] = "Su edad es %s días";
 $you_are[4] = "Você tem uma idade de %s dias";
 $you_are[5] = "U bent %s dagen oud";
 
@@ -76,7 +77,7 @@ while (! $ok)
     print "Please choose a language among $languages: ";
     chomp($lang = <STDIN>);
     print "\n";
-    if ($lang = Decode_Language($lang))
+    if (($lang = Decode_Language($lang)) && ($lang < 7))
     {
         $string0 = Language_to_Text($lang);
         print "Your chosen language is: $string0\n";
