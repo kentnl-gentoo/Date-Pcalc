@@ -1,5 +1,5 @@
                      =====================================
-                       Package "Date::Pcalc" Version 6.0
+                       Package "Date::Pcalc" Version 6.1
                      =====================================
 
 
@@ -16,6 +16,7 @@ in the "examples" subdirectory of this distribution:
                         examples/age_in_days_eu.pl
                         examples/age_in_days_us.pl
                         examples/anniversaries.pl
+                        examples/cal.c
                         examples/calendar.pl
                         examples/datecalc.pl
                         examples/delta.pl
@@ -99,6 +100,124 @@ Example output (on October 3rd, 2001):
   +13 days :  Tue 16-Oct-2001  (31)  Cousin Paul
   +18 days :  Sun 21-Oct-2001  (28)  Sister Catherine
   +88 days :  Sun 30-Dec-2001  (30)  Spouse
+
+
+cal.c:
+------
+
+This little program is a substitute for the UNIX "cal" command.
+
+In contrast to the UNIX "cal" command, however, this program allows you
+to choose a language which will be used for generating the calendar for
+the chosen month and year.
+
+(Also in contrast to the UNIX "cal" command, this program will NOT
+generate a tiled overview of ALL the months for a given year, however.)
+
+Moreover, you can (at your option) either enter the number of the desired
+language, or any uniquely identifying abbreviation of its name (or the name
+in full length).
+
+For the month you can also (at your option) either enter the corresponding
+number, or any uniquely identifying abbreviation of the month's name (or
+the name of the month in full length) *IN THE CHOSEN LANGUAGE*.
+
+In order to compile this little program, first copy the file "cal.c" from
+the "examples" subdirectory to the main directory of this distribution.
+
+BEWARE that you should REMOVE this file ("cal.c") from the MAIN directory
+of this distribution BEFORE building this package (i.e., before issuing
+the command "perl Makefile.PL"), because you may get compiler or runtime
+errors (like "duplicate main() function") otherwise. At the very least,
+this will inflate your shared library ("Pcalc.so") unnecessarily if you
+don't.
+
+In order to successfully compile the "cal.c" program, you do NOT need
+to build the Date::Pcalc package first, however.
+
+Then change directory to the main directory of this distribution,
+if you haven't done so already.
+
+Finally, if you have Perl available on your system (no matter whether
+UNIX or Win32), you can compile this program with the following command:
+
+            % perl tools/compile.pl cal.c DatePcalc.c
+or
+            % perl tools\compile.pl cal.c DatePcalc.c
+
+Otherwise, if you have the GNU C compiler ("gcc") available on your system,
+you can also do so (UNIX only) using the command
+
+            % ./tools/compile.sh cal.c DatePcalc.c
+
+On a MSDOS/Windows system, if your ANSI C compiler can be called with "cl",
+you can also compile the program using the command
+
+            % tools\compile cal DatePcalc.c
+
+(Note the missing ".c" at the end of the filename "cal" in this case!)
+
+Otherwise, compile the program with your favourite ANSI C compiler in a
+similar fashion.
+
+In case you have already built the Date::Pcalc package, you can simply
+say
+            % perl tools/compile.pl cal.c DatePcalc.o
+
+(note the "o" at the end of the line instead of a "c") or
+
+            % perl tools\compile.pl cal.c DatePcalc.obj
+
+under Windows.
+
+Now start the program with the command "./cal" (UNIX) or simply "cal"
+(MSDOS/Windows).
+
+(Note that this program is not confined to Win32 systems, it also compiles
+and runs perfectly well on pure MS-DOS or other Windows systems!)
+
+The first parameter is the desired language (currently 1..11 or "English",
+"Français", "Deutsch", "Español", "Português", "Nederlands", "Italiano",
+"Norsk", "Svenska", "Dansk" and "suomi"), the second the month and the
+third the year.
+
+Example:
+                        % cal en apr 1998
+
+This will print:
+
+                            April 1998
+                    Mon Tue Wed Thu Fri Sat Sun
+                              1   2   3   4   5
+                      6   7   8   9  10  11  12
+                     13  14  15  16  17  18  19
+                     20  21  22  23  24  25  26
+                     27  28  29  30
+
+If you start the "cal" program without parameters, it will print a usage
+and exit.
+
+Experiment!
+
+If you like this program, you might want to copy it to some directory in
+your search path, like "/usr/local/bin" (UNIX) or "C:\DOS" or "C:\WinNT"
+(MSDOS/Windows).
+
+If you are running this program on a PC (e.g. MS-DOS, Windows DOS box,
+GNU/Linux or FreeBSD console), you might want to pipe its output through
+the "iso2pc" filter from the "tools" subdirectory (see the file "TOOLS.txt"
+in this distribution for instructions on how to compile and install this
+filter), in order to convert the special international characters from
+the ISO-Latin-1 character set (used throughout this package) to one of
+the (two) character sets commonly used on PC's, as follows:
+
+                    % cal Portug Mar 1998 | iso2pc [-dos]
+
+(for older versions of MS-DOS and the PC-UNIX console) or
+
+                    % cal Portug Mar 1998 | iso2pc -win
+
+(for newer versions of MS-DOS and the Win32 DOS box).
 
 
 calendar.pl:

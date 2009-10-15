@@ -1,5 +1,5 @@
                      =====================================
-                       Package "Date::Pcalc" Version 6.0
+                       Package "Date::Pcalc" Version 6.1
                      =====================================
 
 
@@ -23,15 +23,15 @@ Perl version 5.000 or higher.
 
 Module "Carp::Clan" version 5.3 or higher.
 
-Optionally, module "Bit::Vector" version 7.0 or newer.
+Optionally, module "Bit::Vector" version 7.1 or newer.
 
 If you plan to use the modules "Date::Pcalendar" or
 "Date::Pcalendar::Year" from this package, you will
-also need the module "Bit::Vector" version 7.0 or
+also need the module "Bit::Vector" version 7.1 or
 newer (which needs an ANSI C compiler, however!).
 
 Otherwise you may safely ignore the warning message
-"Warning: prerequisite Bit::Vector 7.0 not found at ..."
+"Warning: prerequisite Bit::Vector 7.1 not found at ..."
 when running "perl Makefile.PL".
 
 Anyway, you can always install "Bit::Vector" later
@@ -228,7 +228,7 @@ Detailed installation guide:
 ----------------------------
 
  1) Change directory to the directory that has been created by unpacking this
-    package ("cd Date-Pcalc-6.0").
+    package ("cd Date-Pcalc-6.1").
 
  2) Type "perl Makefile.PL" (or whatever the name and path of your Perl 5
     binary is).

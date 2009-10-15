@@ -105,7 +105,7 @@ require DynaLoader;
 ##                                              ##
 ##################################################
 
-$VERSION = '6.0';
+$VERSION = '6.1';
 
 sub Version
 {
@@ -219,12 +219,8 @@ my(@DateCalc_Month_to_Text_) =
         "Július", "Augusztus", "Szeptember", "Október", "November", "December"
     ],
     [
-        "???", "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
-        "lipca", "sierpnia", "wrzesnia", "pazdziernika", "listopada", "grudnia"
-      # "???", "Styczen", "Luty", "Marzec", "Kwiecien", "Maj", "Czerwiec",     # non-flected?
-      # "Lipiec", "Sierpien", "Wrzesien", "Pazdziernik", "Listopad", "Grudzien"
-      # "???", "Styczeñ", "Luty", "Marzec", "Kwiecieñ", "Maj", "Czerwiec",     # ISO-Latin-2
-      # "Lipiec", "Sierpieñ", "Wrzesieñ", "Pa¼dziernik", "Listopad", "Grudzieñ"
+        "???", "Styczen", "Luty", "Marzec", "Kwiecien", "Maj", "Czerwiec",     # ISO-Latin-1 approximation
+        "Lipiec", "Sierpien", "Wrzesien", "Pazdziernik", "Listopad", "Grudzien"
     ],
     [
         "???", "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie",
@@ -287,12 +283,8 @@ my(@DateCalc_Day_of_Week_to_Text_) =
         "csütörtök", "péntek", "szombat", "vasárnap"
     ],
     [
-        "???", "poniedzialek", "wtorek", "srodek",
-        "czwartek", "piatek", "sobota", "niedziele"
-      # "???", "Poniedzialek", "Wtorek", "Sroda",     # non-flected?
-      # "Czwartek", "Piatek", "Sobota", "Niedziela"
-      # "???", "Poniedzia³ek", "Wtorek", "¦roda",     # ISO-Latin-2
-      # "Czwartek", "Pi±tek", "Sobota", "Niedziela"
+        "???", "poniedzialek", "wtorek", "sroda",     # ISO-Latin-1 approximation
+        "czwartek", "piatek", "sobota", "niedziela"
     ],
     [
         "???", "Luni", "Marti", "Miercuri",
@@ -345,8 +337,7 @@ my(@DateCalc_Day_of_Week_Abbreviation_) =
         "", "", "", "", "", "", "", ""    #  12  #
     ],
     [
-        "???", "Pn", "Wt", "Sr", "Cz", "Pt", "So", "Ni"    #  13  #
-      # "???", "Pn", "Wt", "¦r", "Cz", "Pt", "So", "Ni"    #  13  #    ISO-Latin-2
+        "???", "Pn", "Wt", "Sr", "Cz", "Pt", "So", "Ni"    #  13  #    ISO-Latin-1 approximation
     ],
     [
         "", "", "", "", "", "", "", ""    #  14  #

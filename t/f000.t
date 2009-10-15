@@ -54,11 +54,11 @@ unless ($@)
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if ($Date::Pcalc::VERSION eq '6.0')
+if ($Date::Pcalc::VERSION eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if (&Date::Pcalc::Version() eq '6.0')
+if (&Date::Pcalc::Version() eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
@@ -71,7 +71,7 @@ unless ($@)
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if ($Date::Pcalc::Object::VERSION eq '6.0')
+if ($Date::Pcalc::Object::VERSION eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
@@ -84,17 +84,17 @@ unless ($@)
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if ($Date::Pcalendar::Profiles::VERSION eq '6.0')
+if ($Date::Pcalendar::Profiles::VERSION eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
 exit 0 if $n > $tests;
 
-if ($Bit::Vector::VERSION >= '7.0')
+if ($Bit::Vector::VERSION >= '7.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if (&Bit::Vector::Version() >= '7.0')
+if (&Bit::Vector::Version() >= '7.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
@@ -107,7 +107,7 @@ unless ($@)
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if ($Date::Pcalendar::Year::VERSION eq '6.0')
+if ($Date::Pcalendar::Year::VERSION eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
@@ -120,7 +120,7 @@ unless ($@)
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
-if ($Date::Pcalendar::VERSION eq '6.0')
+if ($Date::Pcalendar::VERSION eq '6.1')
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 

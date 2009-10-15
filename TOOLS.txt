@@ -1,5 +1,5 @@
                      =====================================
-                       Package "Date::Pcalc" Version 6.0
+                       Package "Date::Pcalc" Version 6.1
                      =====================================
 
 
@@ -61,8 +61,10 @@ been compiled with (or which Perl has been configured to use), and
 
 If this is not what you have, adapt these little scripts accordingly!
 
-You will most probably want to use these tools in order to compile
-the "iso2pc.c" and "pc2iso.c" pair of filters (see the section
+You will most probably want to use these tools in order to compile the
+program "cal.c" from the "examples" subdirectory of this distribution
+(see the file "EXAMPLES.txt" in this distribution for details) or to
+compile the "iso2pc.c" and "pc2iso.c" pair of filters (see the section
 immediately below for more details).
 
 

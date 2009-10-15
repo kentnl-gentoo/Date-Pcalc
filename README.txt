@@ -1,5 +1,5 @@
                      =====================================
-                       Package "Date::Pcalc" Version 6.0
+                       Package "Date::Pcalc" Version 6.1
                      =====================================
 
 
@@ -48,17 +48,11 @@ intensively (with the original and unmodified test suite from
 not requiring you to install "Date::Calc" first.
 
 
-What's new in version 6.0:
+What's new in version 6.1:
 --------------------------
 
- +  Complete rewrite based on Date::Calc version 6.0
-    (Note that this is a 1:1 transcription and that it should
-    therefore behave exactly like the original Date::Calc module)
- +  BEWARE that the system call "mktime()" is not available in
-    Perl; therefore, "Mktime()" in this module does not call it,
-    but tries to calculate the same result on its own. This works
-    on my machine (for some tested dates), but no guarantees can be
-    given it will work on yours (and for other dates and locations).
+ +  United "Date::Calc" and "Date::Pcalc" into a single distribution
+ +  Fixed Polish names of months and days of week (RT ticket #14159)
 
 
 Legal issues:
@@ -84,15 +78,15 @@ Perl version 5.000 or higher.
 
 Module "Carp::Clan" version 5.3 or higher.
 
-Optionally, module "Bit::Vector" version 7.0 or newer.
+Optionally, module "Bit::Vector" version 7.1 or newer.
 
 If you plan to use the modules "Date::Pcalendar" or
 "Date::Pcalendar::Year" from this package, you will
-also need the module "Bit::Vector" version 7.0 or
+also need the module "Bit::Vector" version 7.1 or
 newer (which needs an ANSI C compiler, however!).
 
 Otherwise you may safely ignore the warning message
-"Warning: prerequisite Bit::Vector 7.0 not found at ..."
+"Warning: prerequisite Bit::Vector 7.1 not found at ..."
 when running "perl Makefile.PL".
 
 Anyway, you can always install "Bit::Vector" later
@@ -148,7 +142,7 @@ the "zip" archive.
 Note to CPAN Testers:
 ---------------------
 
-After completion, version 6.0 of this module has already
+After completion, version 6.1 of this module has already
 been tested successfully with the following configurations:
 
   Perl 5.005_03  -  Windows XP SP3 & MS VC++ 6.0 (native Perl build)

@@ -38,7 +38,7 @@ BEGIN # Re-export imports from Date::Pcalc:
     %EXPORT_TAGS = (all => [@Date::Pcalc::EXPORT_OK],
                     aux => [@AUXILIARY],
                     ALL => [@EXPORT_OK]);
-    $VERSION     = '6.0';
+    $VERSION     = '6.1';
     Date::Pcalc->import(@Date::Pcalc::EXPORT,@Date::Pcalc::EXPORT_OK);
 }
 
