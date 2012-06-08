@@ -93,7 +93,10 @@ typedef  Z_longword         *Z_longwordptr;
     #elif PERL_DARWIN
         #define boolean bool
     #else
-        typedef enum { false = FALSE, true = TRUE } boolean;
+        typedef int boolean;
+        #ifndef I_STDBOOL
+            enum { false, true };
+        #endif
     #endif
 #endif
 
