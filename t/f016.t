@@ -4,7 +4,7 @@ BEGIN { eval { require bytes; }; }
 use strict;
 no strict "vars";
 
-use Date::Pcalc qw( Decode_Date_EU Decode_Date_US );
+use Date::Pcalc qw( Decode_Date_EU Decode_Date_US Moving_Window);
 
 # ======================================================================
 #   ($year,$mm,$dd) = Decode_Date_EU($buffer);
@@ -15,19 +15,19 @@ print "1..25\n";
 
 $n = 1;
 if ((($year,$mm,$dd) = Decode_Date_EU("3.1.64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3 1 64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("03.01.64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("03/01/64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3. Ene 1964",4)) &&
@@ -35,11 +35,11 @@ if ((($year,$mm,$dd) = Decode_Date_EU("3. Ene 1964",4)) &&
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("Geburtstag: 3. Januar '64 in Backnang/Württemberg",3)) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("03-Jan-64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3.Jan1964",6)) &&
@@ -47,19 +47,19 @@ if ((($year,$mm,$dd) = Decode_Date_EU("3.Jan1964",6)) &&
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3Jan64",0)) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("030164")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3ja64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_EU("3164")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
@@ -72,15 +72,15 @@ unless (($year,$mm,$dd) = Decode_Date_EU("29.2.1995"))
 $n++;
 
 if ((($year,$mm,$dd) = Decode_Date_US("1 3 64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("01/03/64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("Jan 3 '64")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("Jan 3 1964")) &&
@@ -96,15 +96,15 @@ if ((($year,$mm,$dd) = Decode_Date_US("Jan31964")) &&
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("Jan364")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("ja364")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 if ((($year,$mm,$dd) = Decode_Date_US("1364")) &&
-($year==1964)&&($mm==1)&&($dd==3))
+($year==Moving_Window(64))&&($mm==1)&&($dd==3))
 {print "ok $n\n";} else {print "not ok $n\n";}
 $n++;
 
